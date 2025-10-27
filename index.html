@@ -37,7 +37,7 @@
       /* App frame */
       .phone {
         width: 400px; /* desktop preview width; it'll scale on mobile */
-        max-width: 98%;
+        max-width: 100%;
         height: 780px;
         max-height: 100vh;
         background: linear-gradient(180deg, #071826 0%, #0b1b2a 100%);
@@ -156,7 +156,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 12px;
+        padding: 8px 12px 50px;
         z-index: 10;
       }
 
@@ -206,12 +206,11 @@
       }
 
       /* Responsive: make phone narrower on small screens */
-      @media (max-width: 420px) {
+      @media (max-width: 100%) {
         .phone {
           width: 100%;
           height: 100vh;
           border-radius: 0;
-          padding: 0;
         }
         .tabbar {
           left: 0;
