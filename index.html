@@ -74,6 +74,7 @@
         flex: 1 1 auto;
         display: block;
         padding: 18px;
+        padding-bottom: 90px; /* prevent content from being hidden under tabbar */
         overflow-x: hidden;
         overflow-y: auto;
         background: transparent;
@@ -90,6 +91,7 @@
         display: block;
         height: auto;
         min-height: fit-content;
+        padding-bottom: 45px;
       }
 
       .screen.active {
@@ -144,7 +146,7 @@
 
       /* Bottom tab bar */
       .tabbar {
-        position: sticky;
+        position: absolute; /* fixed inside the phone frame */
         bottom: 0;
         left: 0;
         right: 0;
@@ -228,7 +230,7 @@
       /* Refresh button style */
       .refresh-btn {
         position: sticky;
-        bottom: 20px;
+        bottom: 45px;
         left: 75%;
         z-index: 1000;
         padding: 12px 18px;
@@ -271,8 +273,11 @@
         >
           <h1>Here are some vendors we handpicked for you!</h1>
           <p>
-            Not Interested? Yeah we lied, its randomly picked.<br/>
-            Just hit <i>refresh</i> or check out the vendor list <i><u><a href="">here</a></u></i>.
+            Not Interested? Yeah we lied, its randomly picked.<br />
+            Just hit <i>refresh</i> or check out the vendor list
+            <i
+              ><u><a href="">here</a></u></i
+            >.
           </p>
           <br />
           <div id="vendorList">
@@ -389,21 +394,23 @@
             if (document.getElementById(h)) activate(h, false);
           });
 
-          // preserve scroll positions per screen (basic)
-          const scrollPos = {};
-          screens.forEach((s) => {
-            s.addEventListener("scroll", () => (scrollPos[s.id] = s.scrollTop));
-          });
-          // restore when activated
+          // always scroll to top when switching screens
           const realActivate = activate;
           activate = function (target) {
-            // save current
+            // deactivate current screen
             const cur = document.querySelector(".screen.active");
-            if (cur) scrollPos[cur.id] = cur.scrollTop;
+            if (cur) cur.classList.remove("active");
+
+            // activate target screen
             realActivate(target);
+
+            // scroll to top of the content area or screen
             const opened = document.getElementById(target);
-            if (opened && scrollPos[target])
-              opened.scrollTop = scrollPos[target];
+            if (opened)
+              opened.scrollTo({
+                top: 0,
+                behavior: "instant" in Intl ? "smooth" : "auto",
+              });
           };
         })();
       </script>
@@ -629,5 +636,47 @@
       // Reload the page to regenerate new vendors
       location.reload();
     }
+
+    function ensureOpenAndScrollTop() {
+      const initial = location.hash
+        ? location.hash.replace("#", "")
+        : "vendors";
+      // If activate exists and is callable, use it. Otherwise fall back to clicking the tab.
+      if (typeof activate === "function") {
+        try {
+          activate(initial, false); // second arg = don't push history
+        } catch (e) {
+          // fallback if activate throws
+          const tabBtn = document.querySelector(`[data-target="${initial}"]`);
+          if (tabBtn) tabBtn.click();
+        }
+      } else {
+        const tabBtn = document.querySelector(`[data-target="${initial}"]`);
+        if (tabBtn) tabBtn.click();
+      }
+
+      // Scroll the content container to top (instant). Use smooth if you prefer.
+      const content = document.querySelector(".content");
+      if (content)
+        content.scrollTo({
+          top: 0,
+          behavior: "instant" in Intl ? "smooth" : "auto",
+        });
+    }
+
+    // Run once DOM is loaded
+    window.addEventListener("DOMContentLoaded", () => {
+      ensureOpenAndScrollTop();
+    });
+
+    // Also run on full load (covers images/fonts)
+    window.addEventListener("load", () => {
+      ensureOpenAndScrollTop();
+    });
+
+    // Also scroll to top when hash changes (back/forward)
+    window.addEventListener("hashchange", () => {
+      ensureOpenAndScrollTop();
+    });
   </script>
 </html>
