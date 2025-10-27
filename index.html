@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport"
+            content="width=device-width,initial-scale=1,viewport-fit=cover" />
+        <title>Human Rights Festival 2025</title>
+        <style>
+    :root{
+      --bg:#0f1724; /* page background */
+      --card:#0b1220; /* screen surface */
+      --accent:#06b6d4; /* active color */
+      --muted:#9aa4b2; /* inactive color */
+      --nav-bg:rgba(255,255,255,0.03);
+      --radius:14px;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#07101a);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;align-items:center;justify-content:center;
+      padding:20px;
+    }
+
+    /* App frame */
+    .phone{
+      width:400px; /* desktop preview width; it'll scale on mobile */
+      max-width:100%;
+      height:780px;
+      max-height:100vh;
+      background:linear-gradient(180deg,#071826 0%, #0b1b2a 100%);
+      border-radius:30px;
+      box-shadow:0 20px 40px rgba(2,6,23,0.6), 0 4px 10px rgba(0,0,0,0.6) inset;
+      position:relative;
+      overflow:hidden;
+      display:flex;flex-direction:column;
+    }
+
+    /* Top bar (status) */
+    .status{
+      height:44px;flex:0 0 44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:13px;color:var(--muted);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-bottom:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* Content area */
+    .content{
+      position:relative;flex:1 1 auto;display:block;padding:18px;overflow:auto;background:transparent;
+    }
+
+    .screen{
+      position:absolute;inset:0;padding:18px 18px 86px 18px; /* leave space for bottom navigation */
+      transition:transform 320ms cubic-bezier(.2,.9,.3,1),opacity 220ms ease;
+      transform:translateX(6%);
+      opacity:0;pointer-events:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .screen.active{transform:none;opacity:1;pointer-events:auto;}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 6px 18px rgba(2,6,23,0.45);border:1px solid rgba(255,255,255,0.03);
+    }
+
+    h1{margin:0 0 8px;font-size:18px;font-weight:600}
+    p{margin:0;color:var(--muted);line-height:1.5}
+
+    /* Bottom tab bar */
+    .tabbar{
+      position:absolute;left:12px;right:12px;bottom:12px;height:64px;background:var(--nav-bg);backdrop-filter:blur(8px);
+      border-radius:18px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border:1px solid rgba(255,255,255,0.03);
+    }
+    .tab{
+      flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;border-radius:12px;cursor:pointer;user-select:none;transition:all 180ms ease;opacity:0.95;
+    }
+    .tab:focus{outline:2px solid rgba(6,182,212,0.16);outline-offset:3px}
+
+    .tab .icon{width:22px;height:22px;display:inline-block;}
+    .tab .label{font-size:12px;color:var(--muted)}
+    .tab.active .label{color:var(--accent);font-weight:600}
+    .tab.active .icon svg{filter:drop-shadow(0 2px 6px rgba(6,182,212,0.15));}
+
+    /* badge example */
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;background:rgba(255,255,255,0.04);color:var(--muted)}
+
+    /* Responsive: make phone narrower on small screens */
+    @media (max-width:420px){
+      .phone{width:100%;height:100vh;border-radius:0;padding:0}
+      .tabbar{left:0;right:0;bottom:0;border-radius:0;height:70px;padding:10px}
+      .screen{padding:20px 16px 96px}
+    }
+
+  </style>
+    </head>
+    <body>
+        <div class="phone" role="application"
+            aria-label="Two tab mobile app demo">
+            <div class="status" aria-hidden="true">
+                <div>Carrier</div>
+                <div>9:41</div>
+            </div>
+
+            <main class="content">
+                <section id="home" class="screen active" role="region"
+                    aria-label="Home screen">
+                    <div class="card">
+                        <h1>Home</h1>
+                        <p>Welcome to the Home screen. This area is scrollable
+                            and can contain any content — lists, cards, maps,
+                            etc.</p>
+                    </div>
+                    <div class="card">
+                        <h1>Recent</h1>
+                        <p class="muted">Recent activity, notifications, or
+                            anything you'd like to show on the first tab.</p>
+                    </div>
+                </section>
+
+                <section id="settings" class="screen" role="region"
+                    aria-label="Settings screen">
+                    <div class="card">
+                        <h1>Settings</h1>
+                        <p>Put toggles, preferences or other controls here. Tab
+                            switching preserves scroll and can use the URL hash
+                            so the back button works.</p>
+                    </div>
+                    <div class="card">
+                        <h1>Account</h1>
+                        <p class="muted">User details, sign out button, and
+                            other account management UI.</p>
+                    </div>
+                </section>
+
+            </main>
+
+            <nav class="tabbar" role="tablist" aria-label="Bottom tabs">
+                <button class="tab active" role="tab" aria-selected="true"
+                    aria-controls="home" data-target="home" id="tab-home">
+                    <span class="icon" aria-hidden="true">
+                        <!-- home icon -->
+                        <svg viewBox="0 0 24 24" fill="none" width="22"
+                            height="22" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z"
+                                stroke="currentColor" stroke-width="1.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span class="label">Home</span>
+                </button>
+
+                <button class="tab" role="tab" aria-selected="false"
+                    aria-controls="settings" data-target="settings"
+                    id="tab-settings">
+                    <span class="icon" aria-hidden="true">
+                        <!-- settings icon -->
+                        <svg viewBox="0 0 24 24" fill="none" width="22"
+                            height="22" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z"
+                                stroke="currentColor" stroke-width="1.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09c.67 0 1.25-.41 1.51-1a1.65 1.65 0 0 0-.33-1.82L4.3 4.9A2 2 0 0 1 7.13 2.07l.06.06c.5.38 1.13.6 1.82.33.6-.24 1.2-.65 1-.09V3a2 2 0 0 1 4 0v.09c.2.52.6 1 .99 1.24.69.27 1.32.05 1.82-.33l.06-.06A2 2 0 0 1 20 4.3l-.06.06c-.67.38-1.25.99-1.51 1.61-.17.36-.15.78.09 1.1.26.6.66 1.23 1.24.99H21a2 2 0 0 1 0 4h-.09c-.52.2-1 .6-1.24.99-.27.69-.05 1.32.33 1.82l.06.06A2 2 0 0 1 19.4 15z"
+                                stroke="currentColor" stroke-width="1.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span class="label">Settings</span>
+                </button>
+            </nav>
+
+            <script>
+      // Tab switching logic with URL hash support + accessibility
+      (function(){
+        const tabs = document.querySelectorAll('.tab');
+        const screens = document.querySelectorAll('.screen');
+
+        function activate(targetId, pushState = true){
+          // toggle tab active states
+          tabs.forEach(t=>{
+            const is = t.dataset.target===targetId;
+            t.classList.toggle('active', is);
+            t.setAttribute('aria-selected', is? 'true':'false');
+          });
+          // toggle screens
+          screens.forEach(s=>{
+            s.classList.toggle('active', s.id===targetId);
+          });
+
+          if(pushState){
+            history.replaceState(null,'', '#'+targetId);
+          }
+        }
+
+        // attach events
+        tabs.forEach(t=>{
+          t.addEventListener('click', ()=> activate(t.dataset.target));
+          t.addEventListener('keydown', (e)=>{
+            if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activate(t.dataset.target); }
+          });
+        });
+
+        // on load, open from hash if present
+        const initial = location.hash ? location.hash.replace('#','') : 'home';
+        if(document.getElementById(initial)) activate(initial, false);
+
+        // handle back/forward
+        window.addEventListener('hashchange', ()=>{
+          const h = location.hash.replace('#','') || 'home';
+          if(document.getElementById(h)) activate(h, false);
+        });
+
+        // preserve scroll positions per screen (basic)
+        const scrollPos = {};
+        screens.forEach(s=>{
+          s.addEventListener('scroll', ()=> scrollPos[s.id] = s.scrollTop);
+        });
+        // restore when activated
+        const realActivate = activate;
+        activate = function(target){
+          // save current
+          const cur = document.querySelector('.screen.active');
+          if(cur) scrollPos[cur.id] = cur.scrollTop;
+          realActivate(target);
+          const opened = document.getElementById(target);
+          if(opened && scrollPos[target]) opened.scrollTop = scrollPos[target];
+        }
+
+      })();
+    </script>
+        </div>
+    </body>
+</html>
