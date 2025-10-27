@@ -70,9 +70,20 @@
     p{margin:0;color:var(--muted);line-height:1.5}
 
     /* Bottom tab bar */
-    .tabbar{
-      position:absolute;left:12px;right:12px;bottom:12px;height:64px;background:var(--nav-bg);backdrop-filter:blur(8px);
-      border-radius:18px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border:1px solid rgba(255,255,255,0.03);
+    .tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    z-index: 100;
     }
     .tab{
       flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;border-radius:12px;cursor:pointer;user-select:none;transition:all 180ms ease;opacity:0.95;
