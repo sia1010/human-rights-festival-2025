@@ -227,12 +227,91 @@
         }
       }
 
-      /* Refresh button style */
-      .refresh-btn {
-        position: sticky;
-        bottom: 45px;
-        left: 75%;
-        z-index: 1000;
+      /* --- NEW GAME CSS --- */
+      #game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 100%; /* Try to fill the screen */
+        justify-content: space-around;
+      }
+
+      #wheel-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
+        display: none; /* Initially hidden */
+      }
+
+      #wheel {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-image: conic-gradient(
+          #e53e3e 0deg 90deg,
+          #38a169 90deg 180deg,
+          #3182ce 180deg 270deg,
+          #d69e2e 270deg 360deg
+        );
+        /* Animation will be controlled by JS */
+        border: 8px solid #07101a;
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(3600deg); /* 10 full spins */
+        }
+      }
+
+      #quiz-section {
+        width: 100%;
+        margin-top: 20px;
+        text-align: left;
+      }
+
+      .choice-btn {
+        width: 100%;
+        padding: 12px;
+        margin: 6px 0;
+        border: 1px solid var(--accent);
+        background: transparent;
+        color: #e6eef6;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+        text-align: left;
+      }
+      .choice-btn:hover:not(:disabled) {
+        background: rgba(6, 182, 212, 0.1);
+      }
+      .choice-btn:disabled {
+        opacity: 1; /* Keep opacity for visibility */
+      }
+      
+      .correct-answer {
+          background-color: rgba(52, 211, 153, 0.4) !important; /* Green for correct */
+          border-color: #34d399 !important;
+      }
+      .wrong-answer {
+          background-color: rgba(239, 68, 68, 0.4) !important; /* Red for incorrect click */
+          border-color: #ef4444 !important;
+      }
+
+
+      /* Redefine refresh-btn as the main game button */
+      .game-btn {
+        position: relative; /* Not sticky anymore */
+        bottom: auto;
+        left: auto;
+        right: auto;
+        z-index: 100;
         padding: 12px 18px;
         border: none;
         border-radius: 14px;
@@ -243,12 +322,19 @@
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         transition: all 0.25s ease;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 300px;
       }
-
-      .refresh-btn:hover {
+      .game-btn:hover:not(:disabled) {
         background: #0891b2;
         transform: translateY(-3px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      }
+      .game-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
       }
     </style>
   </head>
@@ -269,37 +355,33 @@
           id="vendors"
           class="screen active"
           role="region"
-          aria-label="vendors screen"
+          aria-label="Human Rights Quiz"
         >
-          <h1>Here are some vendors we handpicked for you!</h1>
-          <p>
-            Not Interested? Yeah we lied, it's random.<br />
-            Just hit <i>refresh</i> or check out the list
-            <i
-              ><u><a href="">here</a></u></i
-            >.
-          </p>
-          <br />
-          <div id="vendorList">
-            <div class="card">
-              <h3>vendors</h3>
-              <p>
-                Welcome to the vendors screen. This area is scrollable and can
-                contain any content — lists, cards, maps, etc.
-              </p>
+          <div id="game-container">
+            <h1 id="game-title">Meet Our Advocates!</h1>
+            <p id="game-info">
+              Spin the wheel to discover an advocate and learn about our vendors!
+            </p>
+            <h3 id="spins-score-info">Rounds Left: 10 | Score: 0</h3>
+
+            <div id="wheel-container">
+              <div id="wheel"></div>
             </div>
-            <div class="card">
-              <h3>Recent</h3>
-              <p class="muted">
-                Recent activity, notifications, or anything you'd like to show
-                on the first tab.
-              </p>
+
+            <div id="quiz-section" style="display: none;">
+              <h3 id="question-text" style="color: var(--accent);"></h3>
+              <div id="choices-container">
+                </div>
             </div>
+
+            <button id="spin-btn" class="game-btn">
+              Spin Wheel (10 left)
+            </button>
+            <button id="play-again-btn" class="game-btn" style="display: none;">
+              Play Again!
+            </button>
           </div>
-          <button onclick="refreshVendors()" class="refresh-btn">
-            Refresh
-          </button>
-        </section>
+          </section>
 
         <section
           id="about"
@@ -333,7 +415,7 @@
           data-target="vendors"
           id="tab-vendors"
         >
-          <span class="label">Vendors</span>
+          <span class="label">Quiz</span>
         </button>
 
         <button
@@ -417,170 +499,6 @@
     </div>
   </body>
   <script>
-    // --- Vendor data ---
-    const vendors = [
-      {
-        name: "Aisha Rahman",
-        desc: "Advocates for women’s empowerment and equal access to education in rural Malaysia.",
-      },
-      {
-        name: "Daniel Wong",
-        desc: "Focuses on freedom of expression and online safety for youth activists.",
-      },
-      {
-        name: "Siti Nurhaliza Karim",
-        desc: "Campaigns for refugee and asylum-seeker rights across Southeast Asia.",
-      },
-      {
-        name: "Arun Menon",
-        desc: "Promotes LGBTQ+ equality and inclusive community engagement.",
-      },
-      {
-        name: "Maria Lopez",
-        desc: "Humanitarian volunteer raising awareness on child labour and exploitation.",
-      },
-      {
-        name: "Kelvin Othman",
-        desc: "Leads digital rights initiatives protecting online privacy and free speech.",
-      },
-      {
-        name: "Noraini Abdullah",
-        desc: "Supports indigenous communities in land rights and cultural preservation.",
-      },
-      {
-        name: "Ravi Chandran",
-        desc: "Works on improving migrant worker conditions and fair employment laws.",
-      },
-      {
-        name: "Li Wei Tan",
-        desc: "Advocates for accessibility and disability inclusion in workplaces.",
-      },
-      {
-        name: "Jessica Lim",
-        desc: "Focuses on environmental justice and climate resilience in vulnerable communities.",
-      },
-      {
-        name: "Hassan Ali",
-        desc: "Campaigns against racial discrimination and promotes interfaith dialogue.",
-      },
-      {
-        name: "Nurul Zain",
-        desc: "Trains young activists in peacebuilding and conflict mediation.",
-      },
-      {
-        name: "Samuel Tan",
-        desc: "Advocates for press freedom and protection of journalists.",
-      },
-      {
-        name: "Mei Chen",
-        desc: "Raises awareness on gender-based violence and survivor protection.",
-      },
-      {
-        name: "Rahul Patel",
-        desc: "Leads initiatives for fair access to healthcare for marginalised groups.",
-      },
-      {
-        name: "Aminah Bakri",
-        desc: "Works on empowering single mothers through social entrepreneurship.",
-      },
-      {
-        name: "David Lim",
-        desc: "Defends political prisoners and advocates for judicial transparency.",
-      },
-      {
-        name: "Sarah Noor",
-        desc: "Promotes education access for stateless children in border regions.",
-      },
-      {
-        name: "John Francis",
-        desc: "Supports anti-human trafficking operations and survivor rehabilitation.",
-      },
-      {
-        name: "Elena Petrova",
-        desc: "International activist for digital freedom and open internet advocacy.",
-      },
-      {
-        name: "Harun Salleh",
-        desc: "Community leader promoting youth engagement in civic decision-making.",
-      },
-      {
-        name: "Lisa George",
-        desc: "Campaigns for gender equality in corporate leadership roles.",
-      },
-      {
-        name: "Aqil Rahmat",
-        desc: "Advocates for clean water and sanitation rights in underserved areas.",
-      },
-      {
-        name: "Caroline Tan",
-        desc: "Works with NGOs to strengthen regional cooperation on human rights.",
-      },
-      {
-        name: "Nur Hidayah",
-        desc: "Trains rural communities in democratic participation and civic literacy.",
-      },
-      {
-        name: "Victor Ng",
-        desc: "Specialises in corporate accountability and ethical governance.",
-      },
-      {
-        name: "Amira Yusuf",
-        desc: "Champions reproductive health rights and women’s healthcare access.",
-      },
-      {
-        name: "Zul Arif",
-        desc: "Leads campaigns on anti-corruption and transparency reforms.",
-      },
-      {
-        name: "Farah Liyana",
-        desc: "Supports education equality for indigenous and remote-area children.",
-      },
-      {
-        name: "Rizwan Ahmad",
-        desc: "Advocates for fair trials and abolition of the death penalty.",
-      },
-      {
-        name: "Emily Chia",
-        desc: "Coordinates volunteer networks for humanitarian disaster response.",
-      },
-      {
-        name: "Tengku Hafiz",
-        desc: "Promotes digital literacy and combats misinformation online.",
-      },
-      {
-        name: "Noor Fatimah",
-        desc: "Supports survivors of domestic abuse through counselling and legal aid.",
-      },
-      {
-        name: "Adam Chong",
-        desc: "Engages businesses in corporate social responsibility and fair trade.",
-      },
-      {
-        name: "Irene Soon",
-        desc: "Promotes public transparency in environmental policies.",
-      },
-      {
-        name: "Fadzil Malik",
-        desc: "Advocates for freedom of assembly and fair protest rights.",
-      },
-      {
-        name: "Chong Wei",
-        desc: "Focuses on promoting youth leadership in social change.",
-      },
-      {
-        name: "Nur Amirah",
-        desc: "Raises awareness on child marriage prevention.",
-      },
-      {
-        name: "Hafiz Osman",
-        desc: "Advocates for rights of persons with disabilities in employment.",
-      },
-      {
-        name: "Priya Krishnan",
-        desc: "Promotes inclusion and equality in education systems.",
-      },
-    ];
-
     // --- Helper functions for cookie handling ---
     function setCookie(name, value, days) {
       const d = new Date();
@@ -600,83 +518,419 @@
       }
       return null;
     }
+    
+    function deleteCookie(name) {
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+    // --- END Cookie Helpers ---
 
-    // --- Main logic ---
-    let selectedVendors = [];
+    // --- FULLY CUSTOMIZABLE QUIZ DATA ---
+    // The game will randomly select from this list, ensuring no ID is repeated.
+    const quizData = [
+      {
+        id: 1,
+        question: "Question 1",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 2,
+        question: "Question 2",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 3,
+        question: "Question 3",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 4,
+        question: "Question 4",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 5,
+        question: "Question 5",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 6,
+        question: "Question 6",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 7,
+        question: "Question 7",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 8,
+        question: "Question 8",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 9,
+        question: "Question 9",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 10,
+        question: "Question 10",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 11,
+        question: "Question 11",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 12,
+        question: "Question 12",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 13,
+        question: "Question 13",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 14,
+        question: "Question 14",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 15,
+        question: "Question 15",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 16,
+        question: "Question 16",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 17,
+        question: "Question 17",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 18,
+        question: "Question 18",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 19,
+        question: "Question 19",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+      {
+        id: 20,
+        question: "Question 20",
+        correct: "Correct Answer",
+        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
+        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+      },
+    ];
 
-    const saved = getCookie("selectedVendors");
-    if (saved) {
-      selectedVendors = JSON.parse(saved);
-    } else {
-      const selectedIndices = [];
-      while (selectedIndices.length < 10) {
-        const idx = Math.floor(Math.random() * vendors.length);
-        if (!selectedIndices.includes(idx)) selectedIndices.push(idx);
-      }
-      selectedVendors = selectedIndices.map((i) => vendors[i]);
-      setCookie("selectedVendors", JSON.stringify(selectedVendors), 30);
+    // --- GAME LOGIC ---
+    let score = 0;
+    const maxSpins = 10;
+    let spinsLeft = maxSpins;
+    let usedQuizIds = new Set();
+    let currentCorrectAnswer = "";
+    let isSpinning = false;
+    let quizAnswered = false; // Flag: true if the current question has been answered
+    let pendingQuizId = null; // ID of the quiz currently displayed, but not yet answered
+
+    const gameTitleEl = document.getElementById("game-title");
+    const gameInfoEl = document.getElementById("game-info");
+    const spinsScoreInfoEl = document.getElementById("spins-score-info");
+    const wheelContainerEl = document.getElementById("wheel-container");
+    const wheelEl = document.getElementById("wheel");
+    const quizSectionEl = document.getElementById("quiz-section");
+    const questionTextEl = document.getElementById("question-text");
+    const choicesContainerEl = document.getElementById("choices-container");
+    const spinBtnEl = document.getElementById("spin-btn");
+    const playAgainBtnEl = document.getElementById("play-again-btn");
+
+    function saveGame() {
+      const gameState = {
+        score: score,
+        spinsLeft: spinsLeft,
+        usedQuizIds: Array.from(usedQuizIds),
+        pendingQuizId: pendingQuizId,
+        quizAnswered: quizAnswered,
+      };
+      setCookie("hrfQuizState", JSON.stringify(gameState), 30); // Save for 30 days
     }
 
-    // Display vendors in card format
-    const vendorList = document.getElementById("vendorList");
-    vendorList.innerHTML = "";
+    function resetGame() {
+        score = 0;
+        spinsLeft = maxSpins;
+        usedQuizIds = new Set();
+        pendingQuizId = null;
+        quizAnswered = false;
 
-    selectedVendors.forEach((v) => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `<h3>${v.name}</h3><p>${v.desc}</p>`;
-      vendorList.appendChild(card);
-    });
+        deleteCookie("hrfQuizState");
+        
+        // Reset UI elements to starting state
+        gameTitleEl.textContent = "Meet Our Advocates!";
+        gameInfoEl.textContent = "Spin the wheel to discover an advocate and learn about our vendors!";
+        
+        // Ensure buttons are visible/hidden correctly before calling updateInfo
+        spinBtnEl.style.display = 'block';
+        playAgainBtnEl.style.display = 'none';
 
-    // Refresh vendors function
-    function refreshVendors() {
-      // Clear the cookie
-      document.cookie =
-        "selectedVendors=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      // Reload the page to regenerate new vendors
-      location.reload();
+        resetQuizUI(); // Ensures score/spin info is updated and quiz section is hidden
     }
 
-    function ensureOpenAndScrollTop() {
-      const initial = location.hash
-        ? location.hash.replace("#", "")
-        : "vendors";
-      // If activate exists and is callable, use it. Otherwise fall back to clicking the tab.
-      if (typeof activate === "function") {
-        try {
-          activate(initial, false); // second arg = don't push history
-        } catch (e) {
-          // fallback if activate throws
-          const tabBtn = document.querySelector(`[data-target="${initial}"]`);
-          if (tabBtn) tabBtn.click();
-        }
+    function updateInfo() {
+      spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
+      
+      if (quizAnswered && spinsLeft === 0) {
+         // Button re-enabled after answer is selected
+         spinBtnEl.textContent = `End Game`;
+      } else if (quizAnswered && spinsLeft > 0) {
+         // Button re-enabled after answer is selected
+         spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
+      } else if (!quizAnswered && quizSectionEl.style.display !== 'none') {
+         // Button disabled when quiz is visible and not answered
+         spinBtnEl.textContent = "Answer the question first";
       } else {
-        const tabBtn = document.querySelector(`[data-target="${initial}"]`);
-        if (tabBtn) tabBtn.click();
+         // Default state before first spin or after spin finished/UI reset
+         spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
       }
 
-      // Scroll the content container to top (instant). Use smooth if you prefer.
-      const content = document.querySelector(".content");
-      if (content)
-        content.scrollTo({
-          top: 0,
-          behavior: "instant" in Intl ? "smooth" : "auto",
-        });
+      // Main button control: disable if spinning, or if quiz is active and not answered, or if game is over (and 'play again' is now visible)
+      const shouldSpinBtnBeDisabled = isSpinning || (!quizAnswered && quizSectionEl.style.display !== 'none') || (spinsLeft === 0 && !quizAnswered);
+      spinBtnEl.disabled = shouldSpinBtnBeDisabled;
     }
 
-    // Run once DOM is loaded
-    window.addEventListener("DOMContentLoaded", () => {
-      ensureOpenAndScrollTop();
-    });
+    function getRandomUniqueQuiz() {
+      const availableQuizzes = quizData.filter(quiz => !usedQuizIds.has(quiz.id));
+      if (availableQuizzes.length === 0) return null;
 
-    // Also run on full load (covers images/fonts)
-    window.addEventListener("load", () => {
-      ensureOpenAndScrollTop();
-    });
+      const idx = Math.floor(Math.random() * availableQuizzes.length);
+      return availableQuizzes[idx];
+    }
 
-    // Also scroll to top when hash changes (back/forward)
-    window.addEventListener("hashchange", () => {
-      ensureOpenAndScrollTop();
-    });
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function displayQuiz(quiz) {
+      quizAnswered = false;
+      quizSectionEl.style.display = "block";
+      
+      // Ensure the displayed quiz ID is saved as pending
+      pendingQuizId = quiz.id; 
+      saveGame();
+
+      questionTextEl.innerHTML = quiz.question; // Use innerHTML to allow HTML in the question string
+
+      currentCorrectAnswer = quiz.correct;
+      const context = quiz.context; // Store context for reveal
+
+      // Combine correct and incorrect options
+      const options = shuffleArray([
+        quiz.correct,
+        ...quiz.incorrect,
+      ]);
+
+      choicesContainerEl.innerHTML = "";
+      options.forEach((option) => {
+        const button = document.createElement("button");
+        button.className = "choice-btn";
+        button.textContent = option;
+        button.onclick = () => checkAnswer(option, button, context);
+        choicesContainerEl.appendChild(button);
+      });
+
+      updateInfo(); // Button will disable here
+    }
+
+    function checkAnswer(selectedAnswer, clickedButton, context) {
+      quizAnswered = true;
+      const isCorrect = selectedAnswer === currentCorrectAnswer;
+      const allButtons = choicesContainerEl.querySelectorAll(".choice-btn");
+
+      // Disable all buttons and highlight results
+      allButtons.forEach((btn) => {
+        btn.disabled = true;
+        if (btn.textContent === currentCorrectAnswer) {
+          btn.classList.add("correct-answer"); 
+        } else if (btn === clickedButton && !isCorrect) {
+          btn.classList.add("wrong-answer"); 
+        }
+      });
+
+      if (isCorrect) {
+        score++;
+        questionTextEl.innerHTML = `✅ Correct!<br>${context}`;
+      } else {
+        questionTextEl.innerHTML = `❌ Incorrect!<br>${context}`;
+      }
+      
+      // After successfully answering, clear the pending question ID
+      pendingQuizId = null; 
+      
+      saveGame(); // SAVE NEW SCORE/STATE
+      updateInfo(); // Button will re-enable here as 'Next Advocate'
+    }
+    
+    function resetQuizUI() {
+        quizAnswered = false;
+        quizSectionEl.style.display = "none";
+        choicesContainerEl.innerHTML = "";
+        
+        // Final screen when 10 spins are done
+        if (spinsLeft === 0) {
+          spinBtnEl.style.display = 'none';
+          playAgainBtnEl.style.display = 'block'; // Show play again button
+
+          gameTitleEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
+          gameInfoEl.textContent = "Thank you for playing and learning about our advocates!";
+        } else {
+          spinBtnEl.style.display = 'block';
+          playAgainBtnEl.style.display = 'none'; // Hide play again button
+        }
+        
+        updateInfo();
+    }
+
+    function spinWheel() {
+      // Logic for moving to the next round (only allowed if answered or first spin)
+      if (quizAnswered || quizSectionEl.style.display === 'none') {
+          if (spinsLeft === 0) {
+              resetQuizUI(); // Game over sequence
+              return;
+          }
+          // Reset UI for the next spin immediately
+          resetQuizUI();
+      } else {
+          // This case should be prevented by the disabled button, but as a guard:
+          return;
+      }
+      
+      // Spinning logic
+      isSpinning = true;
+
+      const quiz = getRandomUniqueQuiz();
+      if (!quiz) {
+        gameTitleEl.textContent = "All advocates discovered!";
+        spinBtnEl.disabled = true;
+        return;
+      }
+      
+      spinsLeft--; // Spin count decrements only when a spin successfully starts
+      usedQuizIds.add(quiz.id);
+      // We rely on displayQuiz to set pendingQuizId and save the state before displaying the question
+
+      // Hide quiz, show wheel
+      wheelContainerEl.style.display = "block";
+      spinBtnEl.disabled = true;
+
+      // Animate the wheel (just visual flair)
+      wheelEl.style.transition = "none";
+      wheelEl.style.transform = "rotate(0deg)";
+      // Force repaint
+      wheelEl.offsetHeight;
+      wheelEl.style.transition = "transform 3s ease-out";
+      // Spin between 10 to 12 rotations for decoration
+      const finalRotation = 360 * (10 + Math.random() * 2) + (Math.random() * 360);
+      wheelEl.style.transform = `rotate(${finalRotation}deg)`;
+
+      // After animation, hide wheel and show quiz
+      setTimeout(() => {
+        wheelContainerEl.style.display = "none";
+        isSpinning = false; // Spinning finished
+        displayQuiz(quiz);
+      }, 3000); // Animation duration
+    }
+
+    function initGame() {
+      // 1. Load game state from cookie
+      const savedState = getCookie("hrfQuizState");
+      if (savedState) {
+        try {
+          const gameState = JSON.parse(savedState);
+          score = 'score' in gameState ? gameState.score : 0;
+          spinsLeft = 'spinsLeft' in gameState ? gameState.spinsLeft : maxSpins;
+          
+          usedQuizIds = new Set(gameState.usedQuizIds || []);
+          pendingQuizId = gameState.pendingQuizId || null;
+          quizAnswered = gameState.quizAnswered || false;
+          
+          if (spinsLeft === 0) {
+              quizAnswered = true; // Ensure game over UI if finished
+          }
+        } catch (e) {
+          console.error("Error loading game state:", e);
+        }
+      }
+      
+      // 2. RESTORE PENDING QUIZ if one exists and hasn't been answered
+      if (pendingQuizId !== null && !quizAnswered) {
+          const pendingQuiz = quizData.find(q => q.id === pendingQuizId);
+          if (pendingQuiz) {
+              // Restore the quiz display.
+              displayQuiz(pendingQuiz);
+          }
+      }
+
+      // 3. If the game is over on load, trigger the game over UI
+      if (spinsLeft === 0) {
+          resetQuizUI();
+      }
+
+      // 4. Set up event listener and update UI
+      updateInfo();
+      spinBtnEl.addEventListener("click", spinWheel);
+      playAgainBtnEl.addEventListener("click", resetGame);
+    }
+
+    // Run game initialization once DOM is loaded
+    window.addEventListener("DOMContentLoaded", initGame);
   </script>
 </html>
