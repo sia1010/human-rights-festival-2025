@@ -91,7 +91,8 @@
         display: block;
         height: auto;
         min-height: fit-content;
-        padding-bottom: 45px;
+        /* Padding must account for the fixed button at the bottom of the quiz screen */
+        padding-bottom: 90px;
       }
 
       .screen.active {
@@ -117,6 +118,20 @@
         margin-bottom: 12px;
         box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
         border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* New style for quiz answers */
+      .card.answer-choice {
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+      }
+      .card.answer-choice:hover {
+        background: rgba(6, 182, 212, 0.08); /* Highlight on hover */
+        border-color: rgba(6, 182, 212, 0.3);
+      }
+      .card.answer-choice.disabled {
+          pointer-events: none;
+          opacity: 0.6;
       }
 
       h1 {
@@ -197,42 +212,38 @@
         filter: drop-shadow(0 2px 6px rgba(6, 182, 212, 0.15));
       }
 
-      /* badge example */
-      .badge {
-        display: inline-block;
-        padding: 2px 8px;
-        border-radius: 999px;
-        font-size: 11px;
-        background: rgba(255, 255, 255, 0.04);
+      /* New style for the score and spin counter */
+      .score-board {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .score-board div {
+        text-align: center;
+      }
+      .score-board strong {
+        display: block;
+        font-size: 24px;
+        color: var(--accent);
+      }
+      .score-board span {
+        font-size: 12px;
         color: var(--muted);
       }
 
-      /* Responsive: make phone narrower on small screens */
-      @media (max-width: 100%) {
-        .phone {
-          width: 100%;
-          height: 100vh;
-          border-radius: 0;
-        }
-        .tabbar {
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-radius: 0;
-          height: 70px;
-          padding: 10px;
-        }
-        .screen {
-          padding: 20px 0px 96px;
-        }
-      }
 
-      /* Refresh button style */
-      .refresh-btn {
-        position: sticky;
-        bottom: 45px;
-        left: 75%;
+      /* Spin Button: FIXED position within the quiz screen */
+      .spin-btn {
+        position: fixed; /* Fixed relative to the phone frame */
+        bottom: 180px; /* Above the tab bar */
+        left: 50%;
+        transform: translateX(-50%);
         z-index: 1000;
+        width: 80%;
+        max-width: 300px;
         padding: 12px 18px;
         border: none;
         border-radius: 14px;
@@ -241,14 +252,48 @@
         font-weight: 600;
         font-size: 14px;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         transition: all 0.25s ease;
       }
 
-      .refresh-btn:hover {
+      .spin-btn:hover:not(:disabled) {
         background: #0891b2;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        transform: translate(-50%, -3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+
+      .spin-btn:disabled {
+        background: var(--muted);
+        cursor: not-allowed;
+        opacity: 0.7;
+        transform: translateX(-50%); /* Ensure disabled state is centered */
+      }
+      
+      /* Spinning Wheel specific styles */
+      #wheelCanvas {
+        display: block;
+        margin: 20px auto;
+        border: 4px solid var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        transition: transform 4s cubic-bezier(0.1, 0.7, 0.2, 1);
+        position: fixed; /* Fixed relative to the phone frame */
+        bottom: -250px; /* Above the tab bar */
+      }
+      .wheel-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #pointer {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-top: 20px solid #e6eef6;
+          z-index: 10;
+          transform: translateY(-260px); /* Position above the wheel center */
       }
     </style>
   </head>
@@ -265,42 +310,62 @@
       </div>
 
       <main class="content">
+        <!-- VENDORS SCREEN: Static list -->
         <section
           id="vendors"
           class="screen active"
           role="region"
           aria-label="vendors screen"
         >
-          <h1>Here are some vendors we handpicked for you!</h1>
+          <h1>Meet the Advocates</h1>
           <p>
-            Not Interested? Yeah we lied, it's random.<br />
-            Just hit <i>refresh</i> or check out the list
-            <i
-              ><u><a href="">here</a></u></i
-            >.
+            Explore the wonderful human rights advocates and organizations
+            participating in this year's festival.
           </p>
           <br />
           <div id="vendorList">
-            <div class="card">
-              <h3>vendors</h3>
-              <p>
-                Welcome to the vendors screen. This area is scrollable and can
-                contain any content — lists, cards, maps, etc.
-              </p>
-            </div>
-            <div class="card">
-              <h3>Recent</h3>
-              <p class="muted">
-                Recent activity, notifications, or anything you'd like to show
-                on the first tab.
-              </p>
-            </div>
+            <!-- Vendor list will be populated by script -->
           </div>
-          <button onclick="refreshVendors()" class="refresh-btn">
-            Refresh
-          </button>
         </section>
 
+        <!-- QUIZ SCREEN: Game screen -->
+        <section
+          id="quiz"
+          class="screen"
+          role="region"
+          aria-label="human rights quiz screen"
+        >
+          <h1>The Human Rights Quiz!</h1>
+          <p>Spin the wheel to select a vendor and answer a question about their cause. Get 10 points for every correct answer!</p>
+          <br>
+
+          <div class="wheel-container">
+              <div id="pointer"></div>
+              <canvas id="wheelCanvas" width="500" height="500"></canvas>
+          </div>
+
+          <div class="score-board">
+            <div>
+              <strong id="totalScoreDisplay">0</strong>
+              <span>Total Score</span>
+            </div>
+            <div>
+              <strong id="spinsLeftDisplay">10</strong>
+              <span>Spins Left</span>
+            </div>
+          </div>
+          
+          <div id="quizArea">
+            <!-- Quiz content will be injected here -->
+          </div>
+
+          <div id="gameOver" style="display: none; text-align: center; margin-top: 30px;">
+              <h2>Game Over!</h2>
+              <p>You have used all 10 spins. Your final score is <strong id="finalScore"></strong> points.</p>
+          </div>
+        </section>
+
+        <!-- ABOUT SCREEN: Unchanged -->
         <section
           id="about"
           class="screen"
@@ -323,7 +388,13 @@
           </div>
         </section>
       </main>
+      
+      <!-- FIXED BUTTON for Quiz -->
+      <button id="spinBtn" onclick="spinWheel()" class="spin-btn">
+        Spin the Wheel! (10 Max)
+      </button>
 
+      <!-- TAB BAR: Added Quiz Tab -->
       <nav class="tabbar" role="tablist" aria-label="Bottom tabs">
         <button
           class="tab active"
@@ -334,6 +405,17 @@
           id="tab-vendors"
         >
           <span class="label">Vendors</span>
+        </button>
+        
+        <button
+          class="tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="quiz"
+          data-target="quiz"
+          id="tab-quiz"
+        >
+          <span class="label">Quiz</span>
         </button>
 
         <button
@@ -349,12 +431,17 @@
       </nav>
 
       <script>
-        // Tab switching logic with URL hash support + accessibility
+        // --- Tab switching logic with URL hash support + accessibility ---
+        const spinBtn = document.getElementById('spinBtn');
+
         (function () {
           const tabs = document.querySelectorAll(".tab");
           const screens = document.querySelectorAll(".screen");
 
           function activate(targetId, pushState = true) {
+            // Hide spin button unless on quiz screen
+            spinBtn.style.display = (targetId === 'quiz') ? 'block' : 'none';
+
             // toggle tab active states
             tabs.forEach((t) => {
               const is = t.dataset.target === targetId;
@@ -405,9 +492,9 @@
             realActivate(target);
 
             // scroll to top of the content area or screen
-            const opened = document.getElementById(target);
-            if (opened)
-              opened.scrollTo({
+            const content = document.querySelector(".content");
+            if (content)
+              content.scrollTo({
                 top: 0,
                 behavior: "instant" in Intl ? "smooth" : "auto",
               });
@@ -581,102 +668,316 @@
       },
     ];
 
-    // --- Helper functions for cookie handling ---
-    function setCookie(name, value, days) {
-      const d = new Date();
-      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-      const expires = "expires=" + d.toUTCString();
-      document.cookie =
-        name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
-    }
-
-    function getCookie(name) {
-      const decoded = decodeURIComponent(document.cookie);
-      const parts = decoded.split("; ");
-      for (let part of parts) {
-        if (part.startsWith(name + "=")) {
-          return part.substring(name.length + 1);
-        }
-      }
-      return null;
-    }
-
-    // --- Main logic ---
-    let selectedVendors = [];
-
-    const saved = getCookie("selectedVendors");
-    if (saved) {
-      selectedVendors = JSON.parse(saved);
-    } else {
-      const selectedIndices = [];
-      while (selectedIndices.length < 10) {
-        const idx = Math.floor(Math.random() * vendors.length);
-        if (!selectedIndices.includes(idx)) selectedIndices.push(idx);
-      }
-      selectedVendors = selectedIndices.map((i) => vendors[i]);
-      setCookie("selectedVendors", JSON.stringify(selectedVendors), 30);
-    }
-
-    // Display vendors in card format
+    // --- Static Vendor List Display ---
     const vendorList = document.getElementById("vendorList");
-    vendorList.innerHTML = "";
-
-    selectedVendors.forEach((v) => {
+    vendorList.innerHTML = ""; 
+    vendors.forEach((v) => {
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `<h3>${v.name}</h3><p>${v.desc}</p>`;
       vendorList.appendChild(card);
     });
 
-    // Refresh vendors function
-    function refreshVendors() {
-      // Clear the cookie
-      document.cookie =
-        "selectedVendors=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      // Reload the page to regenerate new vendors
-      location.reload();
-    }
 
-    function ensureOpenAndScrollTop() {
-      const initial = location.hash
-        ? location.hash.replace("#", "")
-        : "vendors";
-      // If activate exists and is callable, use it. Otherwise fall back to clicking the tab.
-      if (typeof activate === "function") {
-        try {
-          activate(initial, false); // second arg = don't push history
-        } catch (e) {
-          // fallback if activate throws
-          const tabBtn = document.querySelector(`[data-target="${initial}"]`);
-          if (tabBtn) tabBtn.click();
-        }
-      } else {
-        const tabBtn = document.querySelector(`[data-target="${initial}"]`);
-        if (tabBtn) tabBtn.click();
+    // --- QUIZ GAME LOGIC ---
+    let totalScore = 0;
+    let currentSpins = 0;
+    const MAX_SPINS = 10;
+    let availableQuestions = [];
+    let currentQuestion = null;
+    const wheelCanvas = document.getElementById('wheelCanvas');
+    const ctx = wheelCanvas.getContext('2d');
+    const wheelSize = wheelCanvas.width;
+    const center = wheelSize / 2;
+    const radius = center;
+    let currentRotation = 0;
+
+    // --- Quiz Questions Data (10 distinct questions for 10 spins) ---
+    const quizQuestions = [
+      {
+        vendorName: "Aisha Rahman",
+        question: "Aisha Rahman advocates primarily for which group's empowerment and access to education?",
+        choices: ["Refugee children", "Urban poor", "Women in rural Malaysia", "Stateless children"],
+        answer: "Women in rural Malaysia"
+      },
+      {
+        vendorName: "Daniel Wong",
+        question: "Daniel Wong focuses on which areas for youth activists?",
+        choices: ["Fair employment laws", "Freedom of expression and online safety", "Clean water access", "Anti-human trafficking"],
+        answer: "Freedom of expression and online safety"
+      },
+      {
+        vendorName: "Siti Nurhaliza Karim",
+        question: "Siti Nurhaliza Karim campaigns for the rights of which group?",
+        choices: ["Indigenous communities", "Migrant workers", "Refugees and asylum-seekers", "Persons with disabilities"],
+        answer: "Refugees and asylum-seekers"
+      },
+      {
+        vendorName: "Arun Menon",
+        question: "Arun Menon primarily promotes equality and inclusion for which community?",
+        choices: ["Senior citizens", "LGBTQ+", "Ex-prisoners", "Religious minorities"],
+        answer: "LGBTQ+"
+      },
+      {
+        vendorName: "Ravi Chandran",
+        question: "Ravi Chandran's work is focused on improving conditions for which workers?",
+        choices: ["Factory workers", "Migrant workers", "Gig economy drivers", "Domestic helpers"],
+        answer: "Migrant workers"
+      },
+      {
+        vendorName: "Li Wei Tan",
+        question: "Li Wei Tan advocates for accessibility and inclusion in workplaces for which group?",
+        choices: ["Single mothers", "Youth leaders", "Persons with disabilities", "Journalists"],
+        answer: "Persons with disabilities"
+      },
+      {
+        vendorName: "Hassan Ali",
+        question: "Hassan Ali campaigns against racial discrimination and promotes what kind of dialogue?",
+        choices: ["Political debate", "Economic policy discussion", "Interfaith dialogue", "Youth mentorship"],
+        answer: "Interfaith dialogue"
+      },
+      {
+        vendorName: "David Lim",
+        question: "David Lim defends political prisoners and advocates for transparency in which system?",
+        choices: ["Healthcare", "Judicial", "Electoral", "Education"],
+        answer: "Judicial"
+      },
+      {
+        vendorName: "Zul Arif",
+        question: "Zul Arif leads campaigns on anti-corruption and which type of reforms?",
+        choices: ["Agricultural", "Housing", "Transparency", "Border control"],
+        answer: "Transparency"
+      },
+      {
+        vendorName: "Noor Fatimah",
+        question: "Noor Fatimah supports survivors of domestic abuse through counselling and what type of aid?",
+        choices: ["Housing aid", "Legal aid", "Micro-loans", "Medical supplies"],
+        answer: "Legal aid"
       }
+    ];
+    
+    // Vendor names for the wheel (Must match question vendors)
+    const wheelSegments = quizQuestions.map(q => q.vendorName);
+    const colors = ['#f87171', '#fbbf24', '#a78bfa', '#4ade80', '#2dd4bf', '#3b82f6', '#f472b6', '#eab308', '#6b7280', '#10b981'];
 
-      // Scroll the content container to top (instant). Use smooth if you prefer.
-      const content = document.querySelector(".content");
-      if (content)
-        content.scrollTo({
-          top: 0,
-          behavior: "instant" in Intl ? "smooth" : "auto",
+    function drawWheel() {
+        ctx.clearRect(0, 0, wheelSize, wheelSize);
+        const segmentAngle = (2 * Math.PI) / wheelSegments.length;
+
+        wheelSegments.forEach((segment, i) => {
+            const startAngle = i * segmentAngle;
+            const endAngle = (i + 1) * segmentAngle;
+
+            // Draw segment
+            ctx.beginPath();
+            ctx.moveTo(center, center);
+            ctx.arc(center, center, radius, startAngle, endAngle);
+            ctx.closePath();
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.fill();
+            ctx.strokeStyle = '#0f1724';
+            ctx.stroke();
+
+            // Draw text
+            ctx.save();
+            ctx.translate(center, center);
+            ctx.rotate(startAngle + segmentAngle / 2);
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#1f2937';
+            ctx.font = 'bold 12px Inter';
+            ctx.fillText(segment, radius * 0.9, 0);
+            ctx.restore();
         });
     }
 
-    // Run once DOM is loaded
+    function rotateWheel(degrees) {
+        currentRotation = degrees;
+        wheelCanvas.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
+    function updateScoreBoard() {
+      document.getElementById('totalScoreDisplay').textContent = totalScore;
+      document.getElementById('spinsLeftDisplay').textContent = MAX_SPINS - currentSpins;
+      
+      if (currentSpins >= MAX_SPINS) {
+        spinBtn.disabled = true;
+        spinBtn.textContent = 'Game Over';
+        endGame();
+      } else if (currentQuestion) {
+        // Disabled while a question is active
+        spinBtn.disabled = true;
+        spinBtn.textContent = 'Answer the Question';
+      } else {
+        // Enabled when ready to spin
+        spinBtn.disabled = false;
+        spinBtn.textContent = 'Spin the Wheel!';
+      }
+    }
+
+    function initializeGame() {
+      availableQuestions = [...quizQuestions]; 
+      totalScore = 0;
+      currentSpins = 0;
+      currentQuestion = null;
+      document.getElementById('gameOver').style.display = 'none';
+      document.getElementById('quizArea').style.display = 'block';
+      drawWheel();
+      updateScoreBoard();
+    }
+
+    function spinWheel() {
+      if (currentSpins >= MAX_SPINS || availableQuestions.length === 0 || currentQuestion) {
+        return;
+      }
+      
+      // Disable the button during the spin
+      spinBtn.disabled = true;
+      spinBtn.textContent = 'Spinning...';
+      
+      // 1. Select a random, non-repeated question (vendor)
+      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+      currentQuestion = availableQuestions[randomIndex];
+
+      // 2. Remove the question from available list so it can't be repeated
+      availableQuestions.splice(randomIndex, 1);
+      
+      // 3. Determine target segment angle
+      const targetVendorName = currentQuestion.vendorName;
+      const originalIndex = wheelSegments.indexOf(targetVendorName);
+      const segmentAngle = 360 / wheelSegments.length;
+      
+      // The pointer is at 0 degrees (top). We want the center of the winning segment
+      // to align with the pointer.
+      let targetRotation = 270 - (originalIndex * segmentAngle + segmentAngle / 2); // 270 degrees is the top position
+      
+      // Add multiple full rotations (e.g., 5 spins) for dramatic effect
+      const spins = 5;
+      const newRotation = targetRotation + (spins * 360); 
+
+      // Apply the rotation with transition defined in CSS
+      rotateWheel(newRotation);
+
+      // 4. Increment spin count immediately
+      currentSpins++;
+      
+      // 5. Display the quiz after the spin animation is complete (4 seconds)
+      setTimeout(() => {
+          displayQuiz(currentQuestion);
+          updateScoreBoard(); 
+      }, 4000); 
+    }
+
+    function displayQuiz(q) {
+      const quizArea = document.getElementById('quizArea');
+      
+      // Display the vendor's name and cause first
+      const vendorInfo = vendors.find(v => v.name === q.vendorName);
+      let html = `
+        <div class="card">
+          <h3 style="color: var(--accent);">Question ${currentSpins}/${MAX_SPINS}:</h3>
+          <p style="font-size: 1.1em; color: #e6eef6; margin-bottom: 15px;">${q.question}</p>
+        </div>
+        <div id="answerChoices">
+      `;
+
+      // Randomize the order of choices
+      const shuffledChoices = [...q.choices].sort(() => Math.random() - 0.5);
+
+      // Add the answer choices as clickable cards
+      shuffledChoices.forEach((choice) => {
+        // Use double quotes for data-answer to be safe, and escape single quotes for the function call
+        const safeChoice = choice.replace(/'/g, "\\'"); 
+        html += `
+          <div 
+            class="card answer-choice" 
+            onclick="checkAnswer('${safeChoice}')"
+            data-answer="${choice.replace(/"/g, "")}"
+            >
+            <p style="color: #e6eef6;">${choice}</p>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      quizArea.innerHTML = html;
+    }
+
+    function checkAnswer(selectedAnswer) {
+      const isCorrect = (selectedAnswer === currentQuestion.answer);
+      const answerChoicesDiv = document.getElementById('answerChoices');
+      const choices = answerChoicesDiv.querySelectorAll('.answer-choice');
+      
+      // 1. Disable all choices for feedback
+      choices.forEach(c => {
+        c.classList.add('disabled');
+        const choiceText = c.getAttribute('data-answer');
+
+        if (choiceText === currentQuestion.answer) {
+          // Highlight correct answer in green
+          c.style.background = 'rgba(22, 163, 74, 0.3)';
+          c.style.borderColor = 'rgba(22, 163, 74, 0.7)';
+        } else if (choiceText === selectedAnswer) {
+          // Highlight incorrect selected answer in red
+          c.style.background = 'rgba(220, 38, 38, 0.3)';
+          c.style.borderColor = 'rgba(220, 38, 38, 0.7)';
+        }
+      });
+      
+      // 2. Update score
+      if (isCorrect) {
+        totalScore += 10;
+        document.getElementById('quizArea').insertAdjacentHTML('beforeend', '<p style="color: #4ade80; font-weight: 600; text-align: center; margin-top: 15px;">Correct! +10 Points!</p>');
+      } else {
+        document.getElementById('quizArea').insertAdjacentHTML('beforeend', '<p style="color: #f87171; font-weight: 600; text-align: center; margin-top: 15px;">Incorrect. The correct answer was: ' + currentQuestion.answer + '</p>');
+      }
+      
+      // 3. Clear the question state immediately
+      currentQuestion = null; 
+      
+      // 4. Update the score display (score and spins left)
+      document.getElementById('totalScoreDisplay').textContent = totalScore;
+      document.getElementById('spinsLeftDisplay').textContent = MAX_SPINS - currentSpins;
+
+      // 5. Delay to allow user to see the result, then re-enable for next spin
+      setTimeout(() => {
+          if (currentSpins < MAX_SPINS) {
+              
+              // Update prompt area
+              document.getElementById('quizArea').innerHTML = `
+                  <div class="card">
+                      <p>Answer noted! You currently have <strong>${totalScore}</strong> points. Click 'Spin the Wheel!' to select your next vendor.</p>
+                  </div>
+              `;
+              
+              // Re-enable the button and reset its text
+              updateScoreBoard();
+
+          } else {
+              // Game over logic
+              updateScoreBoard(); 
+          }
+      }, 3000); // 3-second pause
+    }
+
+    function endGame() {
+        document.getElementById('quizArea').style.display = 'none';
+        const finalScoreElement = document.getElementById('finalScore');
+        finalScoreElement.textContent = totalScore;
+        document.getElementById('gameOver').style.display = 'block';
+        spinBtn.style.display = 'none'; // Hide button completely
+    }
+
+
+    // --- Initialization on Load ---
     window.addEventListener("DOMContentLoaded", () => {
-      ensureOpenAndScrollTop();
+      // Draw the wheel before initialization, as the canvas needs to be ready.
+      drawWheel();
+      initializeGame();
+      
+      // Ensure button visibility is correct based on the initial screen
+      const initial = location.hash ? location.hash.replace("#", "") : "vendors";
+      spinBtn.style.display = (initial === 'quiz') ? 'block' : 'none';
     });
 
-    // Also run on full load (covers images/fonts)
-    window.addEventListener("load", () => {
-      ensureOpenAndScrollTop();
-    });
-
-    // Also scroll to top when hash changes (back/forward)
-    window.addEventListener("hashchange", () => {
-      ensureOpenAndScrollTop();
-    });
   </script>
 </html>
