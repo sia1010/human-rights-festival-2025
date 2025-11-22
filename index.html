@@ -11,7 +11,7 @@
       :root {
         --bg: #0f1724; /* page background */
         --card: #0b1220; /* screen surface */
-        --accent: #d36a14df; /* active color */
+        --accent: #f15f5fe7; /* active color */
         --muted: #5a5c60; /* inactive color */
         --nav-bg: rgba(255, 255, 255, 0.03);
         --radius: 14px;
@@ -151,7 +151,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 64px;
+        height: 34px;
         background: var(--nav-bg);
         border-top: 1px solid rgba(255, 255, 255, 0.03);
         border-radius: 0;
@@ -193,7 +193,7 @@
       }
 
       .tab.active .tab-icon {
-        filter: opacity(1);
+        filter: opacity(0.9);
         transform: scale(1.2); /* increase size of active icon */
       }
 
@@ -372,11 +372,6 @@
       role="application"
       aria-label="Human Rights Festival 2025"
     >
-      <div class="status">
-        <div>Human Rights Festival 2025</div>
-        <div>Malaysian Bar</div>
-      </div>
-
       <main class="content">
         <section
           id="vendors"
@@ -385,13 +380,26 @@
           aria-label="Human Rights Quiz"
         >
           <div id="game-container">
-            <h1 id="game-title">Meet Our Advocates!</h1>
-            <p id="game-info">
-              Spin the wheel to discover an advocate and learn about our
-              vendors!
-            </p>
-            <h3 id="spins-score-info">Rounds Left: 10 | Score: 0</h3>
+            <img
+              src="title.png"
+              style="
+                position: absolute;
+                top: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 200px;
+                z-index: 0;
+              "
+            />
+            <div style="height: 120px"></div>
+            <h3
+              style="z-index: 10; color: darkolivegreen"
+              id="spins-score-info"
+            >
+              Rounds Left: 10 | Score: 0
+            </h3>
 
+            <h1 id="game-info" style="z-index: 10"> </h1>
             <div id="wheel-container">
               <div id="wheel"></div>
             </div>
@@ -414,7 +422,11 @@
           role="region"
           aria-label="about screen"
         >
-          <h1>About Us</h1>
+          <div style="height: 70px">
+          </div>
+          <div style="text-align: center">
+            <h1>About Us</h1>
+          </div>
           <img
             src="hrf_sticker.jpg"
             alt="Human Rights Festival Logo"
@@ -549,7 +561,7 @@
             if (opened)
               opened.scrollTo({
                 top: 0,
-                behavior: "instant" in Intl ? "smooth" : "auto",
+                behavior: "smooth",
               });
           };
         })();
@@ -559,10 +571,10 @@
   <script>
     // --- NEW: Color Definitions ---
     const choicebg = [
-      "red.png", // Mint Green / Soft Aqua
-      "orange.png", // Light Yellow / Pale Gold
-      "yellow.png", // Light Lilac / Soft Lavender
-      "blue.png", // Light Pink / Pastel Rose
+      "peach.png", // Mint Green / Soft Aqua
+      "cement.png", // Light Yellow / Pale Gold
+      "olive.png", // Light Lilac / Soft Lavender
+      "cyan.png", // Light Pink / Pastel Rose
     ];
     // --- END Color Definitions ---
 
@@ -847,7 +859,6 @@
     let quizAnswered = false; // Flag: true if the current question has been answered
     let pendingQuizId = null; // ID of the quiz currently displayed, but not yet answered
 
-    const gameTitleEl = document.getElementById("game-title");
     const gameInfoEl = document.getElementById("game-info");
     const spinsScoreInfoEl = document.getElementById("spins-score-info");
     const wheelContainerEl = document.getElementById("wheel-container");
@@ -879,9 +890,7 @@
       deleteCookie("hrfQuizState");
 
       // Reset UI elements to starting state
-      gameTitleEl.textContent = "Meet Our Advocates!";
-      gameInfoEl.textContent =
-        "Spin the wheel to discover an advocate and learn about our vendors!";
+      gameInfoEl.textContent = " ";
 
       // Ensure buttons are visible/hidden correctly before calling updateInfo
       spinBtnEl.style.display = "block";
@@ -1004,9 +1013,7 @@
         spinBtnEl.style.display = "none";
         playAgainBtnEl.style.display = "block"; // Show play again button
 
-        gameTitleEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
-        gameInfoEl.textContent =
-          "Thank you for playing and learning about our advocates!";
+        gameInfoEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
       } else {
         spinBtnEl.style.display = "block";
         playAgainBtnEl.style.display = "none"; // Hide play again button
@@ -1034,7 +1041,7 @@
 
       const quiz = getRandomUniqueQuiz();
       if (!quiz) {
-        gameTitleEl.textContent = "All advocates discovered!";
+        gameInfoEl.textContent = "All advocates discovered!";
         spinBtnEl.disabled = true;
         return;
       }
