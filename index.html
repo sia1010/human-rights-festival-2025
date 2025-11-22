@@ -900,7 +900,7 @@
     }
 
     function updateInfo() {
-      spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
+      if (spinsLeft > 0) spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
 
       if (quizAnswered && spinsLeft === 0) {
         // Button re-enabled after answer is selected
@@ -932,14 +932,6 @@
 
       const idx = Math.floor(Math.random() * availableQuizzes.length);
       return availableQuizzes[idx];
-    }
-
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
     }
 
     function displayQuiz(quiz) {
@@ -1013,7 +1005,7 @@
         spinBtnEl.style.display = "none";
         playAgainBtnEl.style.display = "block"; // Show play again button
 
-        gameInfoEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
+        spinsScoreInfoEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
       } else {
         spinBtnEl.style.display = "block";
         playAgainBtnEl.style.display = "none"; // Hide play again button
