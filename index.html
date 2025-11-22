@@ -11,8 +11,8 @@
       :root {
         --bg: #0f1724; /* page background */
         --card: #0b1220; /* screen surface */
-        --accent: #06b6d4; /* active color */
-        --muted: #9aa4b2; /* inactive color */
+        --accent: #d36a14df; /* active color */
+        --muted: #5a5c60; /* inactive color */
         --nav-bg: rgba(255, 255, 255, 0.03);
         --radius: 14px;
         font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -24,8 +24,8 @@
       }
       body {
         margin: 0;
-        background: linear-gradient(180deg, var(--bg), #07101a);
-        color: #e6eef6;
+        background: linear-gradient(180deg, var(--bg), #13273e);
+        color: #07101a;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         display: flex;
@@ -39,7 +39,8 @@
         max-width: 100%;
         height: 780px;
         max-height: 100vh;
-        background: linear-gradient(180deg, #071826 0%, #0b1b2a 100%);
+        background: url("human-rights-bg.png") no-repeat center center;
+        background-size: cover;
         border-radius: 30px;
         box-shadow: 0 20px 40px rgba(2, 6, 23, 0.6),
           0 4px 10px rgba(0, 0, 0, 0.6) inset;
@@ -108,7 +109,7 @@
       .card {
         background: linear-gradient(
           180deg,
-          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 1),
           rgba(255, 255, 255, 0.01)
         );
         max-width: 95%;
@@ -116,13 +117,13 @@
         padding: 14px;
         margin-bottom: 12px;
         box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.03);
       }
 
       h1 {
         margin: 0 0 8px;
         font-size: 24px;
         font-weight: 800;
+        color: var(--accent);
       }
       h3 {
         margin: 0 0 8px;
@@ -152,7 +153,6 @@
         right: 0;
         height: 64px;
         background: var(--nav-bg);
-        backdrop-filter: blur(8px);
         border-top: 1px solid rgba(255, 255, 255, 0.03);
         border-radius: 0;
         display: flex;
@@ -163,38 +163,38 @@
       }
 
       .tab {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 8px;
-        border-radius: 12px;
+        border: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
         cursor: pointer;
-        user-select: none;
-        transition: all 180ms ease;
-        opacity: 0.95;
-      }
-      .tab:focus {
-        outline: 2px solid rgba(6, 182, 212, 0.16);
-        outline-offset: 3px;
+        display: flex;
+        justify-content: center; /* center horizontally */
+        align-items: center; /* center vertically */
+        flex: 1 1 auto;
+        height: 100%;
       }
 
-      .tab .icon {
-        width: 22px;
-        height: 22px;
-        display: inline-block;
+      .tab:focus {
+        outline: none;
       }
-      .tab .label {
-        font-size: 12px;
-        color: var(--muted);
+
+      .tab-icon {
+        display: block;
+        width: 80%;
+        height: auto;
+        object-fit: contain;
       }
-      .tab.active .label {
-        color: var(--accent);
-        font-weight: 600;
+
+      /* Optional active highlight */
+      .tab .tab-icon {
+        filter: opacity(0.5);
+        transition: transform 0.25s ease, opacity 0.25s ease;
       }
-      .tab.active .icon svg {
-        filter: drop-shadow(0 2px 6px rgba(6, 182, 212, 0.15));
+
+      .tab.active .tab-icon {
+        filter: opacity(1);
+        transform: scale(1.2); /* increase size of active icon */
       }
 
       /* badge example */
@@ -279,9 +279,12 @@
         width: 100%;
         padding: 12px;
         margin: 6px 0;
-        border: 1px solid var(--accent);
-        background: transparent;
-        color: #e6eef6;
+        border: 0px solid var(--accent);
+        background-image: var(--bg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        color: rgba(0, 0, 0, 0.95);
         border-radius: 8px;
         cursor: pointer;
         font-size: 14px;
@@ -289,21 +292,42 @@
         text-align: left;
       }
       .choice-btn:hover:not(:disabled) {
-        background: rgba(6, 182, 212, 0.1);
+        .choice-btn {
+          width: 100%;
+          padding: 12px;
+          margin: 6px 0;
+          border: 1px solid var(--accent);
+          background: white;
+          color: rgba(0, 0, 0, 0.95);
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background 0.2s;
+          text-align: left;
+        }
       }
       .choice-btn:disabled {
         opacity: 1; /* Keep opacity for visibility */
       }
-      
+
       .correct-answer {
-          background-color: rgba(52, 211, 153, 0.4) !important; /* Green for correct */
-          border-color: #34d399 !important;
+        background-color: rgba(
+          52,
+          211,
+          153,
+          0.4
+        ) !important; /* Green for correct */
+        border-color: #34d399 !important;
       }
       .wrong-answer {
-          background-color: rgba(239, 68, 68, 0.4) !important; /* Red for incorrect click */
-          border-color: #ef4444 !important;
+        background-color: rgba(
+          239,
+          68,
+          68,
+          0.4
+        ) !important; /* Red for incorrect click */
+        border-color: #ef4444 !important;
       }
-
 
       /* Redefine refresh-btn as the main game button */
       .game-btn {
@@ -315,8 +339,9 @@
         padding: 12px 18px;
         border: none;
         border-radius: 14px;
-        background: var(--accent, #06b6d4);
-        color: white;
+        background: url("collage_button.png") no-repeat center center;
+        background-size: cover;
+        color: rgba(0, 0, 0, 0.8);
         font-weight: 600;
         font-size: 14px;
         cursor: pointer;
@@ -327,7 +352,9 @@
         max-width: 300px;
       }
       .game-btn:hover:not(:disabled) {
-        background: #0891b2;
+        background: url("collage_button.png") no-repeat center center;
+        background-size: cover;
+        color: rgba(0, 0, 0, 0.95);
         transform: translateY(-3px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
       }
@@ -360,7 +387,8 @@
           <div id="game-container">
             <h1 id="game-title">Meet Our Advocates!</h1>
             <p id="game-info">
-              Spin the wheel to discover an advocate and learn about our vendors!
+              Spin the wheel to discover an advocate and learn about our
+              vendors!
             </p>
             <h3 id="spins-score-info">Rounds Left: 10 | Score: 0</h3>
 
@@ -368,20 +396,17 @@
               <div id="wheel"></div>
             </div>
 
-            <div id="quiz-section" style="display: none;">
-              <h3 id="question-text" style="color: var(--accent);"></h3>
-              <div id="choices-container">
-                </div>
+            <div id="quiz-section" style="display: none">
+              <h3 id="question-text" style="color: var(--accent)"></h3>
+              <div id="choices-container"></div>
             </div>
 
-            <button id="spin-btn" class="game-btn">
-              Spin Wheel (10 left)
-            </button>
-            <button id="play-again-btn" class="game-btn" style="display: none;">
+            <button id="spin-btn" class="game-btn">Spin Wheel (10 left)</button>
+            <button id="play-again-btn" class="game-btn" style="display: none">
               Play Again!
             </button>
           </div>
-          </section>
+        </section>
 
         <section
           id="about"
@@ -390,17 +415,50 @@
           aria-label="about screen"
         >
           <h1>About Us</h1>
-          <div class="card">
-            <h3>About</h3>
-            <p>
-              Cool about page with links and stuff about this event. Very
-              impressive stuff.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Social Media Links and Stuff</h3>
-            <p class="muted">
-              Links to social media, contact info, and other relevant details.
+          <img
+            src="hrf_sticker.jpg"
+            alt="Human Rights Festival Logo"
+            style="
+              width: 80%;
+              max-width: 100%;
+              display: block;
+              margin: 0 auto 12px auto;
+            "
+          />
+          <div class="card" style="text-align: center">
+            <h3
+              style="
+                margin: 0;
+                font-size: 1.1rem;
+                font-weight: 600;
+                background: linear-gradient(
+                  90deg,
+                  #fa7e1e,
+                  #d62976,
+                  #962fbf,
+                  #4f5bd5
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+              "
+            >
+              Official Instagram Account
+            </h3>
+            <p style="margin: 8px 0 0 0">
+              <a
+                href="https://www.instagram.com/bc.hrc/"
+                target="_blank"
+                style="
+                  color: white;
+                  text-decoration: none;
+                  background: linear-gradient(90deg, #fa7e1e, #d62976);
+                  padding: 6px 12px;
+                  border-radius: 10px;
+                  display: inline-block;
+                "
+              >
+                @bc.hrc
+              </a>
             </p>
           </div>
         </section>
@@ -415,7 +473,7 @@
           data-target="vendors"
           id="tab-vendors"
         >
-          <span class="label">Quiz</span>
+          <img src="quiz.png" alt="Quiz" class="tab-icon" />
         </button>
 
         <button
@@ -426,7 +484,7 @@
           data-target="about"
           id="tab-about"
         >
-          <span class="label">About</span>
+          <img src="about.png" alt="About" class="tab-icon" />
         </button>
       </nav>
 
@@ -499,6 +557,15 @@
     </div>
   </body>
   <script>
+    // --- NEW: Color Definitions ---
+    const choicebg = [
+      "red.png", // Mint Green / Soft Aqua
+      "orange.png", // Light Yellow / Pale Gold
+      "yellow.png", // Light Lilac / Soft Lavender
+      "blue.png", // Light Pink / Pastel Rose
+    ];
+    // --- END Color Definitions ---
+
     // --- Helper functions for cookie handling ---
     function setCookie(name, value, days) {
       const d = new Date();
@@ -518,9 +585,10 @@
       }
       return null;
     }
-    
+
     function deleteCookie(name) {
-      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
     // --- END Cookie Helpers ---
 
@@ -531,147 +599,247 @@
         id: 1,
         question: "Question 1",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 2,
         question: "Question 2",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 3,
         question: "Question 3",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 4,
         question: "Question 4",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 5,
         question: "Question 5",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 6,
         question: "Question 6",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 7,
         question: "Question 7",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 8,
         question: "Question 8",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 9,
         question: "Question 9",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 10,
         question: "Question 10",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 11,
         question: "Question 11",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 12,
         question: "Question 12",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 13,
         question: "Question 13",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 14,
         question: "Question 14",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 15,
         question: "Question 15",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 16,
         question: "Question 16",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 17,
         question: "Question 17",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 18,
         question: "Question 18",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 19,
         question: "Question 19",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
       {
         id: 20,
         question: "Question 20",
         correct: "Correct Answer",
-        incorrect: ["Incorrect Answer 1", "Incorrect Answer 2", "Incorrect Answer 3"],
-        context: "Explanation lorem ipsum dolor sit amet. For more context for the players."
+        incorrect: [
+          "Incorrect Answer 1",
+          "Incorrect Answer 2",
+          "Incorrect Answer 3",
+        ],
+        context:
+          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
       },
     ];
 
     // --- GAME LOGIC ---
     let score = 0;
-    const maxSpins = 10;
+    const maxSpins = 4;
     let spinsLeft = maxSpins;
     let usedQuizIds = new Set();
     let currentCorrectAnswer = "";
@@ -702,49 +870,55 @@
     }
 
     function resetGame() {
-        score = 0;
-        spinsLeft = maxSpins;
-        usedQuizIds = new Set();
-        pendingQuizId = null;
-        quizAnswered = false;
+      score = 0;
+      spinsLeft = maxSpins;
+      usedQuizIds = new Set();
+      pendingQuizId = null;
+      quizAnswered = false;
 
-        deleteCookie("hrfQuizState");
-        
-        // Reset UI elements to starting state
-        gameTitleEl.textContent = "Meet Our Advocates!";
-        gameInfoEl.textContent = "Spin the wheel to discover an advocate and learn about our vendors!";
-        
-        // Ensure buttons are visible/hidden correctly before calling updateInfo
-        spinBtnEl.style.display = 'block';
-        playAgainBtnEl.style.display = 'none';
+      deleteCookie("hrfQuizState");
 
-        resetQuizUI(); // Ensures score/spin info is updated and quiz section is hidden
+      // Reset UI elements to starting state
+      gameTitleEl.textContent = "Meet Our Advocates!";
+      gameInfoEl.textContent =
+        "Spin the wheel to discover an advocate and learn about our vendors!";
+
+      // Ensure buttons are visible/hidden correctly before calling updateInfo
+      spinBtnEl.style.display = "block";
+      playAgainBtnEl.style.display = "none";
+
+      resetQuizUI(); // Ensures score/spin info is updated and quiz section is hidden
     }
 
     function updateInfo() {
       spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
-      
+
       if (quizAnswered && spinsLeft === 0) {
-         // Button re-enabled after answer is selected
-         spinBtnEl.textContent = `End Game`;
+        // Button re-enabled after answer is selected
+        spinBtnEl.textContent = `End Game`;
       } else if (quizAnswered && spinsLeft > 0) {
-         // Button re-enabled after answer is selected
-         spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
-      } else if (!quizAnswered && quizSectionEl.style.display !== 'none') {
-         // Button disabled when quiz is visible and not answered
-         spinBtnEl.textContent = "Answer the question first";
+        // Button re-enabled after answer is selected
+        spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
+      } else if (!quizAnswered && quizSectionEl.style.display !== "none") {
+        // Button disabled when quiz is visible and not answered
+        spinBtnEl.textContent = "Answer the question first";
       } else {
-         // Default state before first spin or after spin finished/UI reset
-         spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
+        // Default state before first spin or after spin finished/UI reset
+        spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
       }
 
       // Main button control: disable if spinning, or if quiz is active and not answered, or if game is over (and 'play again' is now visible)
-      const shouldSpinBtnBeDisabled = isSpinning || (!quizAnswered && quizSectionEl.style.display !== 'none') || (spinsLeft === 0 && !quizAnswered);
+      const shouldSpinBtnBeDisabled =
+        isSpinning ||
+        (!quizAnswered && quizSectionEl.style.display !== "none") ||
+        (spinsLeft === 0 && !quizAnswered);
       spinBtnEl.disabled = shouldSpinBtnBeDisabled;
     }
 
     function getRandomUniqueQuiz() {
-      const availableQuizzes = quizData.filter(quiz => !usedQuizIds.has(quiz.id));
+      const availableQuizzes = quizData.filter(
+        (quiz) => !usedQuizIds.has(quiz.id)
+      );
       if (availableQuizzes.length === 0) return null;
 
       const idx = Math.floor(Math.random() * availableQuizzes.length);
@@ -762,9 +936,9 @@
     function displayQuiz(quiz) {
       quizAnswered = false;
       quizSectionEl.style.display = "block";
-      
+
       // Ensure the displayed quiz ID is saved as pending
-      pendingQuizId = quiz.id; 
+      pendingQuizId = quiz.id;
       saveGame();
 
       questionTextEl.innerHTML = quiz.question; // Use innerHTML to allow HTML in the question string
@@ -773,16 +947,17 @@
       const context = quiz.context; // Store context for reveal
 
       // Combine correct and incorrect options
-      const options = shuffleArray([
-        quiz.correct,
-        ...quiz.incorrect,
-      ]);
+      const options = [quiz.correct, ...quiz.incorrect].sort();
 
       choicesContainerEl.innerHTML = "";
-      options.forEach((option) => {
+      options.forEach((option, index) => {
         const button = document.createElement("button");
         button.className = "choice-btn";
         button.textContent = option;
+        // 👇 UPDATED: Assign bg based on the index (0, 1, 2, 3) 👇
+        const sequentialbg = choicebg[index];
+        button.style.setProperty("--bg", `url('${sequentialbg}')`);
+        // 👆 END UPDATED 👆
         button.onclick = () => checkAnswer(option, button, context);
         choicesContainerEl.appendChild(button);
       });
@@ -799,9 +974,9 @@
       allButtons.forEach((btn) => {
         btn.disabled = true;
         if (btn.textContent === currentCorrectAnswer) {
-          btn.classList.add("correct-answer"); 
+          btn.classList.add("correct-answer");
         } else if (btn === clickedButton && !isCorrect) {
-          btn.classList.add("wrong-answer"); 
+          btn.classList.add("wrong-answer");
         }
       });
 
@@ -811,48 +986,49 @@
       } else {
         questionTextEl.innerHTML = `❌ Incorrect!<br>${context}`;
       }
-      
+
       // After successfully answering, clear the pending question ID
-      pendingQuizId = null; 
-      
+      pendingQuizId = null;
+
       saveGame(); // SAVE NEW SCORE/STATE
       updateInfo(); // Button will re-enable here as 'Next Advocate'
     }
-    
-    function resetQuizUI() {
-        quizAnswered = false;
-        quizSectionEl.style.display = "none";
-        choicesContainerEl.innerHTML = "";
-        
-        // Final screen when 10 spins are done
-        if (spinsLeft === 0) {
-          spinBtnEl.style.display = 'none';
-          playAgainBtnEl.style.display = 'block'; // Show play again button
 
-          gameTitleEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
-          gameInfoEl.textContent = "Thank you for playing and learning about our advocates!";
-        } else {
-          spinBtnEl.style.display = 'block';
-          playAgainBtnEl.style.display = 'none'; // Hide play again button
-        }
-        
-        updateInfo();
+    function resetQuizUI() {
+      quizAnswered = false;
+      quizSectionEl.style.display = "none";
+      choicesContainerEl.innerHTML = "";
+
+      // Final screen when 10 spins are done
+      if (spinsLeft === 0) {
+        spinBtnEl.style.display = "none";
+        playAgainBtnEl.style.display = "block"; // Show play again button
+
+        gameTitleEl.textContent = `Game Over! Final Score: ${score}/${maxSpins}`;
+        gameInfoEl.textContent =
+          "Thank you for playing and learning about our advocates!";
+      } else {
+        spinBtnEl.style.display = "block";
+        playAgainBtnEl.style.display = "none"; // Hide play again button
+      }
+
+      updateInfo();
     }
 
     function spinWheel() {
       // Logic for moving to the next round (only allowed if answered or first spin)
-      if (quizAnswered || quizSectionEl.style.display === 'none') {
-          if (spinsLeft === 0) {
-              resetQuizUI(); // Game over sequence
-              return;
-          }
-          // Reset UI for the next spin immediately
-          resetQuizUI();
-      } else {
-          // This case should be prevented by the disabled button, but as a guard:
+      if (quizAnswered || quizSectionEl.style.display === "none") {
+        if (spinsLeft === 0) {
+          resetQuizUI(); // Game over sequence
           return;
+        }
+        // Reset UI for the next spin immediately
+        resetQuizUI();
+      } else {
+        // This case should be prevented by the disabled button, but as a guard:
+        return;
       }
-      
+
       // Spinning logic
       isSpinning = true;
 
@@ -862,7 +1038,7 @@
         spinBtnEl.disabled = true;
         return;
       }
-      
+
       spinsLeft--; // Spin count decrements only when a spin successfully starts
       usedQuizIds.add(quiz.id);
       // We rely on displayQuiz to set pendingQuizId and save the state before displaying the question
@@ -878,7 +1054,8 @@
       wheelEl.offsetHeight;
       wheelEl.style.transition = "transform 3s ease-out";
       // Spin between 10 to 12 rotations for decoration
-      const finalRotation = 360 * (10 + Math.random() * 2) + (Math.random() * 360);
+      const finalRotation =
+        360 * (10 + Math.random() * 2) + Math.random() * 360;
       wheelEl.style.transform = `rotate(${finalRotation}deg)`;
 
       // After animation, hide wheel and show quiz
@@ -895,33 +1072,33 @@
       if (savedState) {
         try {
           const gameState = JSON.parse(savedState);
-          score = 'score' in gameState ? gameState.score : 0;
-          spinsLeft = 'spinsLeft' in gameState ? gameState.spinsLeft : maxSpins;
-          
+          score = "score" in gameState ? gameState.score : 0;
+          spinsLeft = "spinsLeft" in gameState ? gameState.spinsLeft : maxSpins;
+
           usedQuizIds = new Set(gameState.usedQuizIds || []);
           pendingQuizId = gameState.pendingQuizId || null;
           quizAnswered = gameState.quizAnswered || false;
-          
+
           if (spinsLeft === 0) {
-              quizAnswered = true; // Ensure game over UI if finished
+            quizAnswered = true; // Ensure game over UI if finished
           }
         } catch (e) {
           console.error("Error loading game state:", e);
         }
       }
-      
+
       // 2. RESTORE PENDING QUIZ if one exists and hasn't been answered
       if (pendingQuizId !== null && !quizAnswered) {
-          const pendingQuiz = quizData.find(q => q.id === pendingQuizId);
-          if (pendingQuiz) {
-              // Restore the quiz display.
-              displayQuiz(pendingQuiz);
-          }
+        const pendingQuiz = quizData.find((q) => q.id === pendingQuizId);
+        if (pendingQuiz) {
+          // Restore the quiz display.
+          displayQuiz(pendingQuiz);
+        }
       }
 
       // 3. If the game is over on load, trigger the game over UI
       if (spinsLeft === 0) {
-          resetQuizUI();
+        resetQuizUI();
       }
 
       // 4. Set up event listener and update UI
