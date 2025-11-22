@@ -900,7 +900,7 @@
     }
 
     function updateInfo() {
-      if (spinsLeft > 0) spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
+      if (!(spinsScoreInfoEl.textContent === `Game Over! Final Score: ${score}/${maxSpins}`)) spinsScoreInfoEl.textContent = `Rounds Left: ${spinsLeft} | Score: ${score}`;
 
       if (quizAnswered && spinsLeft === 0) {
         // Button re-enabled after answer is selected
