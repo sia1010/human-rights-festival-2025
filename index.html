@@ -396,7 +396,7 @@
               style="z-index: 10; color: darkolivegreen"
               id="spins-score-info"
             >
-              Rounds Left: 10 | Score: 0
+              Rounds Left: 4 | Score: 0
             </h3>
 
             <h1 id="game-info" style="z-index: 10"> </h1>
@@ -409,7 +409,7 @@
               <div id="choices-container"></div>
             </div>
 
-            <button id="spin-btn" class="game-btn">Spin Wheel (10 left)</button>
+            <button id="spin-btn" class="game-btn">Spin Wheel (4 left)</button>
             <button id="play-again-btn" class="game-btn" style="display: none">
               Play Again!
             </button>
@@ -609,243 +609,531 @@
     const quizData = [
       {
         id: 1,
-        question: "Question 1",
-        correct: "Correct Answer",
+        question: "What exhibition did Tam Maba Studio organise recently?",
+        correct: "A. Kita punya cerita",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "B. Seni Warisan Nusantara",
+          "C. Urban Vibes",
+          "D. Digital Futures",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is A",
       },
       {
         id: 2,
-        question: "Question 2",
-        correct: "Correct Answer",
+        question: "How does the HeartBased Group advance self-advocacy?",
+        correct: "D. Through Diversity, Equity, and Inclusion (DEI) values",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. By offering free legal representation",
+          "B. Through financial literacy workshops",
+          "C. By providing public speaking coaching",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is D",
       },
       {
         id: 3,
-        question: "Question 3",
-        correct: "Correct Answer",
+        question: "How does Dignity for Children empower and support children from marginalised communities?",
+        correct: "A. By providing holistic care and education",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "B. Through monthly cash transfers to families",
+          "C. By organizing international adoption programs",
+          "D. Through sports scholarships",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is A",
       },
       {
         id: 4,
-        question: "Question 4",
-        correct: "Correct Answer",
+        question: "At what age did Anthony Lee start painting?",
+        correct: "B. 9 years",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. 7 years",
+          "C. 12 years",
+          "D. 15 years",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is B",
       },
       {
         id: 5,
-        question: "Question 5",
-        correct: "Correct Answer",
+        question: "What are some simple ways the public can help promote kindness and welfare for animals according to the Animal Kindness Coalition website?",
+        correct: "A. Donate, partner, and advocate",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "B. Ignore, avoid, and criticize",
+          "C. Observe, record, and publish",
+          "D. Restrict, challenge, and protest",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is A",
       },
       {
         id: 6,
-        question: "Question 6",
-        correct: "Correct Answer",
+        question: "The following are how the Mon Refugee Organisation assists Mon Refugees in Malaysia except:",
+        correct: "D. Provide emergency relief ",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Provide quality education",
+          "B. Provide healthcare services",
+          "C. Provide teaching resources",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is D",
       },
       {
         id: 7,
-        question: "Question 7",
-        correct: "Correct Answer",
+        question: "Who are the majority of members of the Association of Nationalist Overseas Filipino Workers in Malaysia?",
+        correct: "B. Domestic workers",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Construction workers",
+          "C. Restaurant and hotel staff",
+          "D. Engineers and technicians",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is B",
       },
       {
         id: 8,
-        question: "Question 8",
-        correct: "Correct Answer",
+        question: "Global Shepherds mainly focuses on the following groups except:",
+        correct: "B.  documented migrant workers in the manufacturing sector",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. women & children",
+          "C. those who are trafficked/forced into migration",
+          "D. refugees and asylum seekers who faced gender-based violence",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is B",
       },
       {
         id: 9,
-        question: "Question 9",
-        correct: "Correct Answer",
+        question: "What is one of Fugee HiEd’s goal?",
+        correct: "C. To increase access and the completion of tertiary education for refugee & stateless youth.",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. To lobby for changes to national refugee policy.",
+          "B. To partner with corporations for immediate job placements.",
+          "D. To offer mental health services and psychological first aid.",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is C",
       },
       {
         id: 10,
-        question: "Question 10",
-        correct: "Correct Answer",
+        question: "What labour law does PERTIMIG advocate to change?",
+        correct: "D. Employment Act 1955",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Industrial Relations Act 1967",
+          "B. Trade Union Act 1959",
+          "C. Occupational Safety and Health Act 1994",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is D",
       },
       {
         id: 11,
-        question: "Question 11",
-        correct: "Correct Answer",
+        question: "How does Gerak Budaya promote critical awareness of Malaysian politics, history, culture and society?",
+        correct: "B. Through publishing and distributing books",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. By organizing nationwide political rallies and protests",
+          "C. By hosting television and radio talk shows",
+          "D. Through free music concerts and cultural festivals",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
-      },
-      {
-        id: 12,
-        question: "Question 12",
-        correct: "Correct Answer",
-        incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
-        ],
-        context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is B",
       },
       {
         id: 13,
-        question: "Question 13",
-        correct: "Correct Answer",
+        question: "How does TheSpectrul empower the autistic and neurodiverse community?",
+        correct: "A. Through art",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "B. Through vocational training in IT",
+          "C. Through organized sports and physical activities",
+          "D. Through structured academic tutoring",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
-      },
-      {
-        id: 14,
-        question: "Question 14",
-        correct: "Correct Answer",
-        incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
-        ],
-        context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is A",
       },
       {
         id: 15,
-        question: "Question 15",
-        correct: "Correct Answer",
+        question: "What initiative does DHRRA implement to alleviate poverty?",
+        correct: "D.  Entrepreneurial Capacity Building Workshops",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Direct cash transfer programs",
+          "B. Free healthcare clinics ",
+          "C. Corporate sponsorship for school supplies",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is D",
       },
       {
         id: 16,
-        question: "Question 16",
-        correct: "Correct Answer",
+        question: "How did Pusat Komas advocate for the rights of individuals in the workplace?",
+        correct: "C. By formulating the Code of Conduct for the Promotion of Equal Opportunities through the Elimination of Racial Discrimination.",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. By organizing nationwide workers' strikes for higher wages.",
+          "B. By providing free legal representation in industrial court cases.",
+          "D. By launching a public awareness campaign on workplace safety.",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
-      },
-      {
-        id: 17,
-        question: "Question 17",
-        correct: "Correct Answer",
-        incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
-        ],
-        context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is C",
       },
       {
         id: 18,
-        question: "Question 18",
-        correct: "Correct Answer",
+        question: "How does North South Initiative improve the lives of marginalized and disenfranchised communities in Malaysia and the Global South?",
+        correct: "C. Through actionable research-driven solutions.",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Through large-scale humanitarian aid distribution.",
+          "B. By funding micro-loans for small business start-ups.",
+          "D. By building schools and community centres.",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is C",
       },
       {
         id: 19,
-        question: "Question 19",
-        correct: "Correct Answer",
+        question: "Which student group does KPUM aim to support and empower in their academic journey?",
+        correct: "C. Law students",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "A. Engineering students",
+          "B. Medical students",
+          "D. Arts and humanities students",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is C",
       },
       {
         id: 20,
-        question: "Question 20",
-        correct: "Correct Answer",
+        question: "What steps does Simply Food Company take to operate sustainably?",
+        correct: "A. Actively seek sustainable sourcing and distribution solutions.",
         incorrect: [
-          "Incorrect Answer 1",
-          "Incorrect Answer 2",
-          "Incorrect Answer 3",
+          "B. Invest heavily in carbon offset programs for their products.",
+          "C. Phase out all single-use plastics from their packaging.",
+          "D. Power all their facilities with 100% renewable energy.",
         ],
         context:
-          "Explanation lorem ipsum dolor sit amet. For more context for the players.",
+          "The correct answer is A",
+      },
+      {
+        id: 22,
+        question: "What is SeniorsAloud latest initiative in supporting retirees to practice active ageing?",
+        correct: "C. A calendar which provides a guide to a healthy, and active lifestyle and ageing well.",
+        incorrect: [
+          "A. A subsidized travel and excursion club for members.",
+          "B. A nationwide series of low-impact aerobics classes.",
+          "D. A partnership with pharmacies for free health screenings.",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 23,
+        question: "What is the main mission behind The Pillars’ community work?",
+        correct: "B. To improve mental and physical wellbeing ",
+        incorrect: [
+          "A. To provide immediate financial aid to families",
+          "C. To organize large-scale public festivals",
+          "D. To offer professional career training",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 25,
+        question: "What is Spread Love’s most recent cause?",
+        correct: "A. Abolition of the death penalty",
+        incorrect: [
+          "B. Promotion of financial literacy for youth",
+          "C. Conservation of local wildlife habitats",
+          "D. Support for local independent artists",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 26,
+        question: "How does Payung Redup help people access therapy anytime, anywhere?",
+        correct: "C. Through online therapy sessions",
+        incorrect: [
+          "A. Through a network of free walk-in clinics",
+          "B. By distributing self-help books and resources",
+          "D. By training community peer supporters",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 27,
+        question: "What role does the Pharmacy Enforcement Division play in protecting public health?",
+        correct: "B. Ensuring the quality and safety of Malaysia’s pharmaceutical and cosmetic products",
+        incorrect: [
+          "A. Promoting traditional remedies through nationwide campaigns",
+          "C. Providing short-term aid to communities during emergencies only",
+          "D. Training international organisations to run community programmes in Malaysia",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 28,
+        question: "What is Akar Umbi’s theory of change?",
+        correct: "B. Strengthening grassroots communities so local changemakers can address the root causes of marginalisation using their lived experiences",
+        incorrect: [
+          "A. Supporting large corporations to lead national policy reforms",
+          "C. Providing short-term aid to communities during emergencies only",
+          "D. Training international organisations to run community programmes in Malaysia",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 29,
+        question: "In 2024, Greenpeace Malaysia achieved the following except: ",
+        correct: "D. Launched a nationwide tree-planting programme that restored 5,000 hectares of degraded forest.",
+        incorrect: [
+          "A. Had a central role in SUHAKAM making a report on haze pollution and the right to clean air.",
+          "B. Successfully advocated for the ban of single-use plastics in national parks, protected forests and marine parks.",
+          "C. Installed solar panels at an orphanage in Sabak Bernam.",
+        ],
+        context:
+          "The correct answer is D",
+      },
+      {
+        id: 30,
+        question: "What is the All Women’s Action Society vision for society?",
+        correct: "B. A just, democratic, and equitable society where everyone, especially women are respected and free from violence and discrimination",
+        incorrect: [
+          "A. A society that promotes economic growth through women-led businesses",
+          "C. A community where women are encouraged to participate only in traditional roles",
+          "D. A society that prioritises international partnerships to advance gender equality",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 31,
+        question: "What is one of SUHAKAM’s key roles in Malaysia?",
+        correct: "B. Promoting and protecting human rights through investigations, education, and public advocacy",
+        incorrect: [
+          "A. Managing the country’s healthcare and welfare programmes",
+          "C. Overseeing all legal aid services for civil and criminal cases",
+          "D. Drafting and passing new federal laws in Parliament",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 33,
+        question: "What is UNHCR mandated to do in Malaysia? ",
+        correct: "A. Safeguard the rights and well-being of refugees and asylum-seekers.",
+        incorrect: [
+          "B. Facilitate the local integration and grant citizenship to refugees.",
+          "C. Enforce immigration laws and detain individuals without valid documents.",
+          "D. Coordinate with employers to secure formal work permits for refugees.",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 34,
+        question: "What is one of ReformARTsi’s goal in implementing its new arts advocacy campaign?",
+        correct: "C. To uphold the human rights of artists and cultural workers.",
+        incorrect: [
+          "A. To establish a government-funded grant for large-scale art installations.",
+          "B. To organize international artist exchange programs.",
+          "D. To build a centralized digital archive for Malaysian traditional art.",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 35,
+        question: "What does the University of Malaya Consti Team (UMCT) dedicated to promote?",
+        correct: "D. Constitutional literacy",
+        incorrect: [
+          "A. Student political activism",
+          "B. International legal affairs",
+          "C. Public health awareness",
+        ],
+        context:
+          "The correct answer is D",
+      },
+      {
+        id: 37,
+        question: "What communities does Morlivly Wellness’ social enterprise positively impacts?",
+        correct: "B. Marginalised farmers and Indigenous communities",
+        incorrect: [
+          "A. Urban youth and local artists",
+          "C. Migrant workers and refugees",
+          "D. Small business owners and entrepreneurs",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 38,
+        question: "How does Tindak Malaysia educate Malaysian citizens to learn about the electorate scene and the redelineation process?",
+        correct: "A. Through its online electoral map site",
+        incorrect: [
+          "B. By publishing a weekly political column in major newspapers",
+          "C. By conducting door-to-door canvassing and surveys",
+          "D. Through televised public debate forums",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 39,
+        question: "How does Wira-Wira Malaysia uplist underprivileged youth?",
+        correct: "C. By implementing programmes that equip them with vital soft skills to drive positive change.",
+        incorrect: [
+          "A. By providing direct financial aid and scholarships for their education.",
+          "B. Through organizing large-scale volunteer-driven community clean-up projects.",
+          "D. By offering free legal assistance and counseling services.",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 40,
+        question: "What is a primary focus of World Vision Malaysia's Child Protection programmes?",
+        correct: "C. To tackle the roots of poverty and injustice, for the sustained well-being of children, especially the most vulnerable.",
+        incorrect: [
+          "A. Promoting children's participation in national arts and culture competitions.",
+          "B. Advocating for corporate partnerships to fund children's entertainment centers.",
+          "D. Establishing legal aid services for family mediation and custody battles.",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 41,
+        question: "What is a key benefit for an educational institution that becomes a part of the Mind Matters Network?",
+        correct: "B. The core committee of the Network provides support through activities, resources, networking, and training.",
+        incorrect: [
+          "A. It receives direct government funding for its mental health programs.",
+          "C. It gains the authority to certify mental health professionals.",
+          "D. Its curriculum is automatically redesigned to include psychological studies.",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 43,
+        question: "How does Kumpulan ACTS Berhad support refugees and asylum seekers in Malaysia?",
+        correct: "A. By providing medical assistance.",
+        incorrect: [
+          "B. By offering legal aid for resettlement applications.",
+          "C. Through organizing vocational training and job placements.",
+          "D. By running temporary shelter homes for new arrivals.",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 45,
+        question: "What core issue regarding persons with disabilities is the focus of Project Lily's current work?",
+        correct: "B. How gender and disability shapes life experiences.",
+        incorrect: [
+          "A. Improving physical accessibility in public transportation systems.",
+          "C. Increasing employment quotas for persons with disabilities in the private sector.",
+          "D. Advocating for inclusive educational curriculum in mainstream schools.",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 46,
+        question: "What gaps does R Youth Initiative aim to address among refugee youths in Malaysia?",
+        correct: "C. Education, vocational training, and employment skills",
+        incorrect: [
+          "A. Healthcare access, nutrition, and mental wellness support",
+          "B. Legal representation, housing, and resettlement services",
+          "D. Sports, arts, and cultural integration programs",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 47,
+        question: "The following are how the Refugee Women Support Collective support refugee women except:",
+        correct: "D. Offer direct financial grants for starting large-scale businesses.",
+        incorrect: [
+          "A. Organize skills training, empowerment workshops, and leadership development.",
+          "B. Create safe space for mental health awareness and peer support.",
+          "C. Provide access to information on healthcare, education and rights.",
+        ],
+        context:
+          "The correct answer is D",
+      },
+      {
+        id: 48,
+        question: "What is the primary educational focus of Pocket of Pink's \"Pocket Pal\" activity book for youth?",
+        correct: "B. Comprehensive sexual education.",
+        incorrect: [
+          "A. Environmental conservation and sustainable living habits.",
+          "C. Basic financial literacy and money management skills.",
+          "D. The fundamentals of coding and computer science.",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 54,
+        question: "What does HaKita aim to achieve through its work?",
+        correct: "A. Empower individuals to understand and exercise their human rights.",
+        incorrect: [
+          "B. Provide direct legal representation in court cases.",
+          "C. Lobby for new human rights legislation in parliament.",
+          "D. Offer international scholarships for human rights studies.",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 56,
+        question: "The KL Legal Aid Centre provides legal aid in the following areas of law except:",
+        correct: "C. Intellectual property matters.",
+        incorrect: [
+          "A. Civil (including family, employment, citizenship and other matters).",
+          "B. Syariah matters.",
+          "D. Criminal matters that are not covered by YBGK.",
+        ],
+        context:
+          "The correct answer is C",
+      },
+      {
+        id: 57,
+        question: "What issue does the BC Women’s Rights Committee S.A.V. M.E. campaign focus on? ",
+        correct: "B. Violence against women and girls.",
+        incorrect: [
+          "A. Closing the gender pay gap in the private sector.",
+          "C. Increasing women's representation in political office.",
+          "D. Improving maternity leave policies and childcare support.",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
+        id: 58,
+        question: "How does the BC Child Rights Committee create awareness about issues regarding children’s rights?",
+        correct: "A. Through webinars and conferences.",
+        incorrect: [
+          "B. By distributing informational pamphlets in public schools.",
+          "C. Through social media campaigns and online petitions.",
+          "D. By organizing community street protests and rallies.",
+        ],
+        context:
+          "The correct answer is A",
+      },
+      {
+        id: 60,
+        question: "What is the mission of the BC Human Rights Committee?",
+        correct: "B. To uphold, promote and protect human rights in accordance with international human rights norms.",
+        incorrect: [
+          "A. To provide free legal aid for civil and criminal cases.",
+          "C. To monitor and report on national government compliance with economic treaties.",
+          "D. To organize cultural exchange programs to foster international understanding.",
+        ],
+        context:
+          "The correct answer is B",
       },
     ];
 
@@ -1000,7 +1288,7 @@
       quizSectionEl.style.display = "none";
       choicesContainerEl.innerHTML = "";
 
-      // Final screen when 10 spins are done
+      // Final screen when all spins are done
       if (spinsLeft === 0) {
         spinBtnEl.style.display = "none";
         playAgainBtnEl.style.display = "block"; // Show play again button
