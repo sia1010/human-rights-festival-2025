@@ -384,7 +384,7 @@
               src="title.png"
               style="
                 position: absolute;
-                top: 50px;
+                top: 15px;
                 left: 50%;
                 transform: translateX(-50%);
                 height: 200px;
@@ -409,7 +409,7 @@
               <div id="choices-container"></div>
             </div>
 
-            <button id="spin-btn" class="game-btn">Spin Wheel (4 left)</button>
+            <button id="spin-btn" class="game-btn">Spin the Wheel (4 left)</button>
             <button id="play-again-btn" class="game-btn" style="display: none">
               Play Again!
             </button>
@@ -609,7 +609,7 @@
     const quizData = [
       {
         id: 1,
-        question: "What exhibition did Tam Maba Studio organise recently?",
+        question: "Which of the following is Tam Maba Studio’s signature showcase?",
         correct: "A. Kita punya cerita",
         incorrect: [
           "B. Seni Warisan Nusantara",
@@ -621,12 +621,12 @@
       },
       {
         id: 2,
-        question: "How does the HeartBased Group advance self-advocacy?",
-        correct: "D. Through Diversity, Equity, and Inclusion (DEI) values",
+        question: "Which principle forms the foundation of The HeartBased Group’s programmes and initiatives?",
+        correct: "D. Diversity, Equity, and Inclusion (DEI)",
         incorrect: [
-          "A. By offering free legal representation",
-          "B. Through financial literacy workshops",
-          "C. By providing public speaking coaching",
+          "A. Free legal representation regardless of nationality",
+          "B. Financial literacy workshops support growth of communities",
+          "C. Confidence can come from public speaking coaching",
         ],
         context:
           "The correct answer is D",
@@ -657,12 +657,12 @@
       },
       {
         id: 5,
-        question: "What are some simple ways the public can help promote kindness and welfare for animals according to the Animal Kindness Coalition website?",
+        question: "What actions does the Animal Kindness Coalition encourage the public to take to promote animal welfare?",
         correct: "A. Donate, partner, and advocate",
         incorrect: [
-          "B. Ignore, avoid, and criticize",
+          "B. Ignore and avoid strays",
           "C. Observe, record, and publish",
-          "D. Restrict, challenge, and protest",
+          "D. Report, challenge, and protest",
         ],
         context:
           "The correct answer is A",
@@ -681,43 +681,31 @@
       },
       {
         id: 7,
-        question: "Who are the majority of members of the Association of Nationalist Overseas Filipino Workers in Malaysia?",
+        question: "Most members of the Association of Nationalist Overseas Filipino Workers in Malaysia are employed in which sector?",
         correct: "B. Domestic workers",
         incorrect: [
-          "A. Construction workers",
+          "A. Agricultural and plantation workers",
           "C. Restaurant and hotel staff",
-          "D. Engineers and technicians",
-        ],
-        context:
-          "The correct answer is B",
-      },
-      {
-        id: 8,
-        question: "Global Shepherds mainly focuses on the following groups except:",
-        correct: "B.  documented migrant workers in the manufacturing sector",
-        incorrect: [
-          "A. women & children",
-          "C. those who are trafficked/forced into migration",
-          "D. refugees and asylum seekers who faced gender-based violence",
+          "D. Beauty and wellness workers",
         ],
         context:
           "The correct answer is B",
       },
       {
         id: 9,
-        question: "What is one of Fugee HiEd’s goal?",
-        correct: "C. To increase access and the completion of tertiary education for refugee & stateless youth.",
+        question: "Which of the following reflects one of Fugee HiEd’s key priorities?",
+        correct: "C. Supporting greater access to and completion of tertiary education for refugee and stateless youth",
         incorrect: [
-          "A. To lobby for changes to national refugee policy.",
-          "B. To partner with corporations for immediate job placements.",
-          "D. To offer mental health services and psychological first aid.",
+          "A. Advocating for broader engagement on refugee-related policies",
+          "B. To partner with corporations for immediate job placements",
+          "D. To offer mental health services and psychological first aid to refugees",
         ],
         context:
           "The correct answer is C",
       },
       {
         id: 10,
-        question: "What labour law does PERTIMIG advocate to change?",
+        question: "Which Malaysian labour law does PERTIMIG primarily advocate to reform in order to strengthen protections for domestic workers?",
         correct: "D. Employment Act 1955",
         incorrect: [
           "A. Industrial Relations Act 1967",
@@ -754,7 +742,7 @@
       {
         id: 15,
         question: "What initiative does DHRRA implement to alleviate poverty?",
-        correct: "D.  Entrepreneurial Capacity Building Workshops",
+        correct: "D.  Entrepreneurial capacity building workshops",
         incorrect: [
           "A. Direct cash transfer programs",
           "B. Free healthcare clinics ",
@@ -765,12 +753,12 @@
       },
       {
         id: 16,
-        question: "How did Pusat Komas advocate for the rights of individuals in the workplace?",
-        correct: "C. By formulating the Code of Conduct for the Promotion of Equal Opportunities through the Elimination of Racial Discrimination.",
+        question: "In what way has Pusat KOMAS supported efforts to address discrimination in workplaces?",
+        correct: "C. By formulating the Code of Conduct for the Promotion of Equal Opportunities through the Elimination of Racial Discrimination",
         incorrect: [
-          "A. By organizing nationwide workers' strikes for higher wages.",
-          "B. By providing free legal representation in industrial court cases.",
-          "D. By launching a public awareness campaign on workplace safety.",
+          "A. Leading wage-related industrial actions",
+          "B. By sponsoring free legal representation in industrial court cases",
+          "D. By launching a public awareness campaign on workplace safety",
         ],
         context:
           "The correct answer is C",
@@ -778,11 +766,11 @@
       {
         id: 18,
         question: "How does North South Initiative improve the lives of marginalized and disenfranchised communities in Malaysia and the Global South?",
-        correct: "C. Through actionable research-driven solutions.",
+        correct: "C. Through actionable research-driven solutions",
         incorrect: [
-          "A. Through large-scale humanitarian aid distribution.",
-          "B. By funding micro-loans for small business start-ups.",
-          "D. By building schools and community centres.",
+          "A. Through large-scale humanitarian aid distribution",
+          "B. By funding micro-loans for small business start-ups",
+          "D. By building schools and community centres",
         ],
         context:
           "The correct answer is C",
@@ -801,24 +789,24 @@
       },
       {
         id: 20,
-        question: "What steps does Simply Food Company take to operate sustainably?",
-        correct: "A. Actively seek sustainable sourcing and distribution solutions.",
+        question: "How does Simply Food Company incorporate sustainability into its business practices?",
+        correct: "A. Actively seeks sustainable sourcing and distribution solutions",
         incorrect: [
-          "B. Invest heavily in carbon offset programs for their products.",
-          "C. Phase out all single-use plastics from their packaging.",
-          "D. Power all their facilities with 100% renewable energy.",
+          "B. Invest heavily in carbon offset programs for their products",
+          "C. Phase out all single-use plastics from their packaging",
+          "D. Power all their facilities with 100% renewable energy",
         ],
         context:
           "The correct answer is A",
       },
       {
         id: 22,
-        question: "What is SeniorsAloud latest initiative in supporting retirees to practice active ageing?",
-        correct: "C. A calendar which provides a guide to a healthy, and active lifestyle and ageing well.",
+        question: "What is SeniorsAloud's latest initiative to support retirees in practicing active ageing?",
+        correct: "C. A calendar that serves as a guide to a healthy and active living and ageing well",
         incorrect: [
-          "A. A subsidized travel and excursion club for members.",
-          "B. A nationwide series of low-impact aerobics classes.",
-          "D. A partnership with pharmacies for free health screenings.",
+          "A. A subsidized travel and excursion club for members",
+          "B. A nationwide series of low-impact aerobics classes",
+          "D. A partnership with pharmacies for free health screenings",
         ],
         context:
           "The correct answer is C",
@@ -829,7 +817,7 @@
         correct: "B. To improve mental and physical wellbeing ",
         incorrect: [
           "A. To provide immediate financial aid to families",
-          "C. To organize large-scale public festivals",
+          "C. To organise large-scale public festivals",
           "D. To offer professional career training",
         ],
         context:
@@ -877,7 +865,7 @@
         correct: "B. Strengthening grassroots communities so local changemakers can address the root causes of marginalisation using their lived experiences",
         incorrect: [
           "A. Supporting large corporations to lead national policy reforms",
-          "C. Providing short-term aid to communities during emergencies only",
+          "C. Providing short-term aid to communities during emergencies",
           "D. Training international organisations to run community programmes in Malaysia",
         ],
         context:
@@ -886,11 +874,11 @@
       {
         id: 29,
         question: "In 2024, Greenpeace Malaysia achieved the following except: ",
-        correct: "D. Launched a nationwide tree-planting programme that restored 5,000 hectares of degraded forest.",
+        correct: "D. Launched a nationwide tree-planting programme that restored 5,000 hectares of degraded forest in Rawang",
         incorrect: [
-          "A. Had a central role in SUHAKAM making a report on haze pollution and the right to clean air.",
-          "B. Successfully advocated for the ban of single-use plastics in national parks, protected forests and marine parks.",
-          "C. Installed solar panels at an orphanage in Sabak Bernam.",
+          "A. Had a central role in SUHAKAM making a report on haze pollution and the right to clean air",
+          "B. Successfully advocated for the ban of single-use plastics in national parks, protected forests and marine parks",
+          "C. Installed solar panels at an orphanage in Sabak Bernam",
         ],
         context:
           "The correct answer is D",
@@ -914,7 +902,7 @@
         incorrect: [
           "A. Managing the country’s healthcare and welfare programmes",
           "C. Overseeing all legal aid services for civil and criminal cases",
-          "D. Drafting and passing new federal laws in Parliament",
+          "D. Drafting and passing new federal laws in Parliament involving international human rights treaties",
         ],
         context:
           "The correct answer is B",
@@ -922,11 +910,11 @@
       {
         id: 33,
         question: "What is UNHCR mandated to do in Malaysia? ",
-        correct: "A. Safeguard the rights and well-being of refugees and asylum-seekers.",
+        correct: "A. Safeguard the rights and well-being of refugees and asylum-seekers",
         incorrect: [
-          "B. Facilitate the local integration and grant citizenship to refugees.",
-          "C. Enforce immigration laws and detain individuals without valid documents.",
-          "D. Coordinate with employers to secure formal work permits for refugees.",
+          "B. Facilitate the local integration and grant citizenship to refugees",
+          "C. Enforce immigration laws and detain individuals without valid documents",
+          "D. Coordinate with employers to secure formal work permits for refugees",
         ],
         context:
           "The correct answer is A",
@@ -934,11 +922,11 @@
       {
         id: 34,
         question: "What is one of ReformARTsi’s goal in implementing its new arts advocacy campaign?",
-        correct: "C. To uphold the human rights of artists and cultural workers.",
+        correct: "C. To uphold the human rights of artists and cultural workers",
         incorrect: [
-          "A. To establish a government-funded grant for large-scale art installations.",
-          "B. To organize international artist exchange programs.",
-          "D. To build a centralized digital archive for Malaysian traditional art.",
+          "A. To establish a government-funded grant for large-scale art installations",
+          "B. To organise international artist exchange programs",
+          "D. To build a centralized digital archive for Malaysian traditional art",
         ],
         context:
           "The correct answer is C",
@@ -954,6 +942,18 @@
         ],
         context:
           "The correct answer is D",
+      },
+      {
+        id: 36,
+        question: "What does EDICT advocate for in improving custodial systems in Malaysia?",
+        correct: "C. Stronger oversight, transparency, and accountability",
+        incorrect: [
+          "A. More detention centres nationwide",
+          "B. Increased police recruitment",
+          "D. Expanded immigration enforcement powers",
+        ],
+        context:
+          "The correct answer is C",
       },
       {
         id: 37,
@@ -982,11 +982,11 @@
       {
         id: 39,
         question: "How does Wira-Wira Malaysia uplist underprivileged youth?",
-        correct: "C. By implementing programmes that equip them with vital soft skills to drive positive change.",
+        correct: "C. By implementing programmes that equip them with vital soft skills to drive positive change",
         incorrect: [
-          "A. By providing direct financial aid and scholarships for their education.",
-          "B. Through organizing large-scale volunteer-driven community clean-up projects.",
-          "D. By offering free legal assistance and counseling services.",
+          "A. By providing direct financial aid and scholarships for their education",
+          "B. Through organising large-scale volunteer-driven community clean-up projects",
+          "D. By offering free legal assistance and counseling services",
         ],
         context:
           "The correct answer is C",
@@ -994,11 +994,11 @@
       {
         id: 40,
         question: "What is a primary focus of World Vision Malaysia's Child Protection programmes?",
-        correct: "C. To tackle the roots of poverty and injustice, for the sustained well-being of children, especially the most vulnerable.",
+        correct: "C. To tackle the roots of poverty and injustice, for the sustained well-being of children, especially the most vulnerable",
         incorrect: [
-          "A. Promoting children's participation in national arts and culture competitions.",
-          "B. Advocating for corporate partnerships to fund children's entertainment centers.",
-          "D. Establishing legal aid services for family mediation and custody battles.",
+          "A. Promoting children's participation in national arts and culture competitions",
+          "B. Advocating for corporate partnerships to fund children's entertainment centers",
+          "D. Establishing legal aid services for family mediation and custody battles",
         ],
         context:
           "The correct answer is C",
@@ -1006,11 +1006,11 @@
       {
         id: 41,
         question: "What is a key benefit for an educational institution that becomes a part of the Mind Matters Network?",
-        correct: "B. The core committee of the Network provides support through activities, resources, networking, and training.",
+        correct: "B. The core committee of the Network provides support through activities, resources, networking, and training",
         incorrect: [
-          "A. It receives direct government funding for its mental health programs.",
-          "C. It gains the authority to certify mental health professionals.",
-          "D. Its curriculum is automatically redesigned to include psychological studies.",
+          "A. It receives direct government funding for its mental health programs",
+          "C. It gains the authority to certify mental health professionals",
+          "D. Its curriculum is automatically redesigned to include psychological studies",
         ],
         context:
           "The correct answer is B",
@@ -1018,11 +1018,11 @@
       {
         id: 43,
         question: "How does Kumpulan ACTS Berhad support refugees and asylum seekers in Malaysia?",
-        correct: "A. By providing medical assistance.",
+        correct: "A. By providing medical assistance",
         incorrect: [
-          "B. By offering legal aid for resettlement applications.",
-          "C. Through organizing vocational training and job placements.",
-          "D. By running temporary shelter homes for new arrivals.",
+          "B. By offering legal aid for resettlement applications",
+          "C. Through organising vocational training and job placements",
+          "D. By running temporary shelter homes for new arrivals",
         ],
         context:
           "The correct answer is A",
@@ -1030,11 +1030,11 @@
       {
         id: 45,
         question: "What core issue regarding persons with disabilities is the focus of Project Lily's current work?",
-        correct: "B. How gender and disability shapes life experiences.",
+        correct: "B. How gender and disability shapes life experiences",
         incorrect: [
-          "A. Improving physical accessibility in public transportation systems.",
-          "C. Increasing employment quotas for persons with disabilities in the private sector.",
-          "D. Advocating for inclusive educational curriculum in mainstream schools.",
+          "A. Improving physical accessibility in public transportation systems",
+          "C. Increasing employment quotas for persons with disabilities in the private sector",
+          "D. Advocating for an inclusive educational curriculum in mainstream schools",
         ],
         context:
           "The correct answer is B",
@@ -1054,11 +1054,11 @@
       {
         id: 47,
         question: "The following are how the Refugee Women Support Collective support refugee women except:",
-        correct: "D. Offer direct financial grants for starting large-scale businesses.",
+        correct: "D. Offer direct financial grants for start-ups",
         incorrect: [
-          "A. Organize skills training, empowerment workshops, and leadership development.",
-          "B. Create safe space for mental health awareness and peer support.",
-          "C. Provide access to information on healthcare, education and rights.",
+          "A. Organize skills training, empowerment workshops, and leadership development",
+          "B. Create safe space for mental health awareness and peer support",
+          "C. Provide access to information on healthcare, education and rights",
         ],
         context:
           "The correct answer is D",
@@ -1066,11 +1066,11 @@
       {
         id: 48,
         question: "What is the primary educational focus of Pocket of Pink's \"Pocket Pal\" activity book for youth?",
-        correct: "B. Comprehensive sexual education.",
+        correct: "B. Comprehensive sexual education",
         incorrect: [
-          "A. Environmental conservation and sustainable living habits.",
-          "C. Basic financial literacy and money management skills.",
-          "D. The fundamentals of coding and computer science.",
+          "A. Environmental conservation and sustainable living habits",
+          "C. Basic financial literacy and money management skills",
+          "D. The fundamentals of coding and computer science",
         ],
         context:
           "The correct answer is B",
@@ -1078,59 +1078,59 @@
       {
         id: 54,
         question: "What does HaKita aim to achieve through its work?",
-        correct: "A. Empower individuals to understand and exercise their human rights.",
+        correct: "A. Empower individuals to understand and exercise their human rights",
         incorrect: [
-          "B. Provide direct legal representation in court cases.",
-          "C. Lobby for new human rights legislation in parliament.",
-          "D. Offer international scholarships for human rights studies.",
+          "B. Provide direct legal representation in court cases",
+          "C. Lobby for new human rights legislation",
+          "D. Offer international scholarships for human rights studies",
         ],
         context:
           "The correct answer is A",
       },
       {
+        id: 55,
+        question: "Which of the following activities is commonly associated with MLSN?",
+        correct: "B. Organising workshops, webinars, and networking events for law students",
+        incorrect: [
+          "A. Publishing legal textbooks for primary schools",
+          "C. Providing employment for law graduates in government agencies",
+          "D. Conducting nationwide legal audits of corporations",
+        ],
+        context:
+          "The correct answer is B",
+      },
+      {
         id: 56,
         question: "The KL Legal Aid Centre provides legal aid in the following areas of law except:",
-        correct: "C. Intellectual property matters.",
+        correct: "C. Intellectual property matters",
         incorrect: [
-          "A. Civil (including family, employment, citizenship and other matters).",
-          "B. Syariah matters.",
-          "D. Criminal matters that are not covered by YBGK.",
+          "A. Civil (including family, employment, citizenship and other matters)",
+          "B. Syariah matters",
+          "D. Criminal matters that are not covered by YBGK",
         ],
         context:
           "The correct answer is C",
       },
       {
         id: 57,
-        question: "What issue does the BC Women’s Rights Committee S.A.V. M.E. campaign focus on? ",
-        correct: "B. Violence against women and girls.",
+        question: "What issue does the Bar Council Women’s Rights Committee S.A.V. M.E. campaign focus on? ",
+        correct: "B. Violence against women and girls",
         incorrect: [
-          "A. Closing the gender pay gap in the private sector.",
-          "C. Increasing women's representation in political office.",
-          "D. Improving maternity leave policies and childcare support.",
+          "A. Closing the gender pay gap in the private sector",
+          "C. Increasing women's representation in political office",
+          "D. Improving maternity leave policies and childcare support",
         ],
         context:
           "The correct answer is B",
       },
       {
-        id: 58,
-        question: "How does the BC Child Rights Committee create awareness about issues regarding children’s rights?",
-        correct: "A. Through webinars and conferences.",
-        incorrect: [
-          "B. By distributing informational pamphlets in public schools.",
-          "C. Through social media campaigns and online petitions.",
-          "D. By organizing community street protests and rallies.",
-        ],
-        context:
-          "The correct answer is A",
-      },
-      {
         id: 60,
-        question: "What is the mission of the BC Human Rights Committee?",
-        correct: "B. To uphold, promote and protect human rights in accordance with international human rights norms.",
+        question: "What is the mission of the Bar Council Human Rights Committee?",
+        correct: "B. To uphold, promote and protect human rights in accordance with international human rights norms",
         incorrect: [
-          "A. To provide free legal aid for civil and criminal cases.",
-          "C. To monitor and report on national government compliance with economic treaties.",
-          "D. To organize cultural exchange programs to foster international understanding.",
+          "A. To provide free legal aid for civil and criminal cases",
+          "C. To monitor and report on national government compliance with economic treaties",
+          "D. To organize cultural exchange programs to foster international understanding",
         ],
         context:
           "The correct answer is B",
@@ -1195,13 +1195,13 @@
         spinBtnEl.textContent = `End Game`;
       } else if (quizAnswered && spinsLeft > 0) {
         // Button re-enabled after answer is selected
-        spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
+        spinBtnEl.textContent = `Spin the Wheel (${spinsLeft} left)`;
       } else if (!quizAnswered && quizSectionEl.style.display !== "none") {
         // Button disabled when quiz is visible and not answered
         spinBtnEl.textContent = "Answer the question first";
       } else {
         // Default state before first spin or after spin finished/UI reset
-        spinBtnEl.textContent = `Spin Wheel (${spinsLeft} left)`;
+        spinBtnEl.textContent = `Spin the Wheel (${spinsLeft} left)`;
       }
 
       // Main button control: disable if spinning, or if quiz is active and not answered, or if game is over (and 'play again' is now visible)
